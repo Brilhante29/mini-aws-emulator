@@ -23,7 +23,7 @@ Adds a local-cloud compatibility boundary that later gateway, outbox, event, and
 
 ## Default Demo Path
 
-- Status: benchmarked
+- Status: published
 - Runtime: Static Go 1.25.10 binary inside Kumo 0.25.3 Alpine image
 - Benchmark command: `powershell -NoProfile -ExecutionPolicy Bypass -File tools/benchmark.ps1`
 

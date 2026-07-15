@@ -10,6 +10,6 @@ Project: `13 - mini-aws-emulator`
 - [x] Real AWS requires explicit opt-in and unique run ID.
 - [x] Architecture, technical decisions, and limits are documented.
 - [x] Reuse review points to a validated, published kit commit.
-- [ ] Public repository exists.
-- [ ] GitHub Actions is green for the published commit.
-- [ ] Manifest status is `published`.
+- [x] Public repository exists.
+- [x] GitHub Actions is green for the published commit.
+- [x] Manifest status is `published`.

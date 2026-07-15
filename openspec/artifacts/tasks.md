@@ -17,7 +17,7 @@
 
 ## Publication
 
-- [ ] Validate project.
-- [ ] Confirm published CI is green.
-- [ ] Confirm article uses committed benchmark result.
-- [ ] Confirm `voice-check.md` verdict is aligned or intentionally overridden.
+- [x] Validate project.
+- [x] Confirm published CI is green.
+- [x] Confirm article uses committed benchmark result.
+- [x] Confirm `voice-check.md` verdict is aligned or intentionally overridden.
