@@ -1,0 +1,146 @@
+{
+  "project": "mini-aws-emulator",
+  "metric": "conformance_rate_percent",
+  "value": 100,
+  "unit": "percent",
+  "timestamp": "2026-07-15T20:25:13.556065869Z",
+  "command": "docker run --rm mini-aws-emulator",
+  "repeat": 1,
+  "summary": {
+    "passed_checks": 18,
+    "total_checks": 18,
+    "conformance_rate_percent": 100,
+    "p95_operation_latency_ms": 2.121,
+    "operations_per_second": 754.371,
+    "measured_operations": 225,
+    "failed_operations": 0,
+    "startup_ms": 107.621,
+    "coverage_percent": 81.2,
+    "sdk_response_close_warnings": 83
+  },
+  "environment": {
+    "aws_sdk_go_v2": "1.41.9",
+    "go": "go1.25.10",
+    "iterations": "25",
+    "provider": "kumo",
+    "provider_digest": "sha256:7ea090ae0b6d1d34615e8b7bd04a2f1cd864ec640a6826a91e90f40e975e196b",
+    "provider_version": "0.25.3",
+    "region": "us-east-1",
+    "runner_version": "dev"
+  },
+  "services": [
+    "s3",
+    "sqs",
+    "dynamodb"
+  ],
+  "checks": [
+    {
+      "service": "s3",
+      "name": "create_bucket",
+      "passed": true,
+      "duration_ms": 3.993
+    },
+    {
+      "service": "s3",
+      "name": "put_object",
+      "passed": true,
+      "duration_ms": 2.23
+    },
+    {
+      "service": "s3",
+      "name": "get_object_body",
+      "passed": true,
+      "duration_ms": 1.916
+    },
+    {
+      "service": "s3",
+      "name": "list_objects",
+      "passed": true,
+      "duration_ms": 2.202
+    },
+    {
+      "service": "s3",
+      "name": "delete_object",
+      "passed": true,
+      "duration_ms": 1.637
+    },
+    {
+      "service": "s3",
+      "name": "delete_bucket",
+      "passed": true,
+      "duration_ms": 1.836
+    },
+    {
+      "service": "sqs",
+      "name": "create_queue",
+      "passed": true,
+      "duration_ms": 2.759
+    },
+    {
+      "service": "sqs",
+      "name": "send_message",
+      "passed": true,
+      "duration_ms": 2.118
+    },
+    {
+      "service": "sqs",
+      "name": "receive_message_body",
+      "passed": true,
+      "duration_ms": 2.021
+    },
+    {
+      "service": "sqs",
+      "name": "delete_message",
+      "passed": true,
+      "duration_ms": 1.757
+    },
+    {
+      "service": "sqs",
+      "name": "list_queues",
+      "passed": true,
+      "duration_ms": 1.934
+    },
+    {
+      "service": "sqs",
+      "name": "delete_queue",
+      "passed": true,
+      "duration_ms": 1.723
+    },
+    {
+      "service": "dynamodb",
+      "name": "create_table",
+      "passed": true,
+      "duration_ms": 3.344
+    },
+    {
+      "service": "dynamodb",
+      "name": "put_item",
+      "passed": true,
+      "duration_ms": 2.806
+    },
+    {
+      "service": "dynamodb",
+      "name": "get_item_value",
+      "passed": true,
+      "duration_ms": 2.198
+    },
+    {
+      "service": "dynamodb",
+      "name": "delete_item",
+      "passed": true,
+      "duration_ms": 2.173
+    },
+    {
+      "service": "dynamodb",
+      "name": "confirm_item_missing",
+      "passed": true,
+      "duration_ms": 2.001
+    },
+    {
+      "service": "dynamodb",
+      "name": "delete_table",
+      "passed": true,
+      "duration_ms": 2.265
+    }
+  ]
+}

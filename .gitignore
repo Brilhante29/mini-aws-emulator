@@ -1,8 +1,7 @@
-__pycache__/
-.pytest_cache/
-.ruff_cache/
-.venv/
+.idea/
+.vscode/
+*.exe
+coverage.out
 benchmarks/results/*.json
-dist/
-target/
-build/
+!benchmarks/results/kumo-baseline.json
+!benchmarks/results/kumo-confirmation.json

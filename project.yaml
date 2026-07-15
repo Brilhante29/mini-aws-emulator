@@ -1,0 +1,147 @@
+id: 13
+name: mini-aws-emulator
+program:
+  id: backend-reliability-platform
+  narrative_fit: "Adds a local-cloud compatibility boundary that later gateway, outbox, event, and infrastructure projects can reuse without requiring an AWS account."
+  shared_assets:
+    - scoped AWS parity contract
+    - provider version and digest evidence
+    - local-to-real AWS adapter switch
+    - SDK compatibility diagnostic counter
+status: benchmarked
+claim: "One AWS SDK v2 adapter preserves 18 scoped S3, SQS, and DynamoDB behaviors when switched between pinned Kumo and real AWS configuration."
+stack:
+  - go-1.25.10
+  - aws-sdk-go-v2-1.41.9
+  - kumo-0.25.3
+  - smithy-go-1.26.0
+  - docker-27.4
+language_profile:
+  primary: go-backend
+  secondary: []
+  reason: "Go keeps the conformance runner, cloud ports, adapter, and benchmark compact while demonstrating explicit interfaces and measurable systems integration."
+decision_brain:
+  agentic_spec:
+    source: .portfolio/decision-brain/agentic-spec-governance.yaml
+    spec_store: portfolio-reuse-kit
+    schema: portfolio-system
+    project_config: openspec/config.yaml
+    component_pack: backend-reliability-platform
+    artifact_graph:
+      - intent->portfolio-impact->architecture-record
+      - architecture-record+portfolio-impact->component-pack
+      - component-pack->reuse-delta->benchmark-proof->tasks->verification
+  agent_graph:
+    mode: principal-agent-orchestrated
+    source: .portfolio/decision-brain/agent-graph.yaml
+    handoff: sdd/agent-handoff.md
+    local_first_runtime: docker
+  reuse_improvement_loop:
+    source: .portfolio/decision-brain/reuse-improvement-loop.yaml
+    review_path: sdd/reuse-improvement-review.md
+    current_status: reviewed
+  principles:
+    coupling_rule: "Conformance and benchmark packages depend on cloud capability ports; only the AWS SDK adapter imports provider libraries or knows endpoint details."
+    solid: [srp, ocp, lsp, isp, dip]
+    simplicity_rule: "Test three core services through one adapter and one executable; do not reimplement Kumo or build a generic cloud framework."
+    testability_rule: "A deterministic in-memory fake substitutes for the AWS adapter in unit tests; the same behavioral suite runs against pinned Kumo in Docker."
+    rejected_overengineering:
+      - custom AWS emulator implementation
+      - one adapter per provider with duplicated SDK calls
+      - microservices
+      - Kubernetes
+      - Kafka or RabbitMQ
+      - GraphQL or REST control API
+  stack_profile: go-backend
+  api_style: cli
+  messaging: none
+  cloud:
+    mode: kumo-local-first
+    local_provider: "Kumo 0.25.3 pinned by OCI digest"
+    real_provider_target: AWS
+    emulated_services:
+      - s3
+      - sqs
+      - dynamodb
+    adapter_rule: "The same AWS SDK v2 adapter uses a Kumo endpoint override and static local credentials or the default AWS endpoint and credential chain."
+    config_switch: "CLOUD_PROVIDER=kumo|aws; real AWS also requires ALLOW_REAL_AWS=true and an explicit RUN_ID."
+    unsupported_behaviors:
+      - IAM policies and authorization parity
+      - service quotas and throttling
+      - multi-region consistency and managed durability
+      - optional S3 response checksum parity
+      - production AWS failure and retry semantics
+  database: dynamodb-compatible-key-value
+  runtime: "Static Go 1.25.10 binary inside Kumo 0.25.3 Alpine image"
+  library_policy: "Use official AWS SDK v2 clients and Smithy logging, pin Kumo by release plus digest, keep ports narrow, and report intentionally handled SDK warnings numerically."
+  record_path: sdd/technical-decision.md
+  rejected_options:
+    - option: Reimplement S3, SQS, and DynamoDB
+      reason: "A partial emulator would spend effort duplicating Kumo instead of proving compatibility, architecture, and measurable behavior."
+    - option: LocalStack
+      reason: "Kumo is the portfolio local-first standard and supplies the required services in a smaller Go-native dependency."
+    - option: Separate local and AWS adapters
+      reason: "Both targets expose the AWS protocol; one configured SDK adapter prevents behavior drift and makes substitution explicit."
+    - option: Kafka or RabbitMQ
+      reason: "The project verifies an AWS queue contract; it does not implement an application messaging workflow."
+architecture:
+  style: hexagonal
+  reason: "Cloud services are material external boundaries, so ports isolate the behavioral suite from the AWS SDK while the composition root selects local or real configuration."
+  problem_forces:
+    domain_complexity: low
+    integration_pressure: high
+    ui_state_complexity: none
+    data_or_ml_reproducibility: low
+    auditability: high
+    throughput_or_async: medium
+    independent_deployability: low
+  dependency_rule: "CLI composition and AWS adapters depend inward on benchmark, conformance, and cloud ports; core packages import no AWS SDK or Kumo implementation."
+  boundaries:
+    - cloud capability ports for objects, queues, and key-value data
+    - scoped conformance use cases
+    - mixed-operation benchmark harness
+    - AWS SDK v2 output adapter
+    - runtime configuration and real-cloud safety guard
+    - JSON evidence and Docker composition
+  rejected_alternatives:
+    - style: direct-sdk-script
+      reason: "A direct script would couple behavior, provider configuration, measurement, and output, preventing a fake adapter and boundary tests."
+    - style: layered
+      reason: "Generic controller-service-repository layers do not model three external cloud capabilities or enforce provider inversion."
+    - style: microservices
+      reason: "There is one executable and no independent deployment boundary; splitting by AWS service adds coordination without improving the proof."
+design_system:
+  tokens: .portfolio/design-system/tokens.yaml
+  readme_components:
+    - readme_header
+    - benchmark_card
+    - architecture_card
+    - references_table
+  diagram_required: true
+reuse:
+  kit_version: cea7f9f
+  uses:
+    - catalog
+    - programs
+    - component-packs
+    - openspec-schema
+    - decision-brain
+    - agent-graph
+    - reuse-improvement-loop
+    - architecture-selector
+    - go-backend-profile
+    - cloud-local-first
+    - design-system
+    - sdd
+    - benchmark-contract
+    - skills
+benchmark:
+  primary_metric: conformance_rate_percent
+  unit: percent
+  command: "powershell -NoProfile -ExecutionPolicy Bypass -File tools/benchmark.ps1"
+  result_path: benchmarks/results/kumo-baseline.json
+release:
+  docker: docker run --rm mini-aws-emulator
+  no_secret_default_path: true
+  readme_has_number: true
+  references_documented: true

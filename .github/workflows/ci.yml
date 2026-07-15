@@ -1,0 +1,40 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+          cache-dependency-path: go.sum
+      - name: Test
+        run: go test ./...
+      - name: Vet
+        run: go vet ./...
+      - name: Build one-container conformance image
+        run: docker build --build-arg VERSION="${GITHUB_SHA}" -t mini-aws-emulator .
+      - name: Smoke scoped conformance
+        run: >-
+          docker run --rm
+          -e BENCHMARK_ITERATIONS=2
+          -e RUN_ID=ci-smoke
+          mini-aws-emulator
+          > /tmp/mini-aws-smoke.json
+      - name: Assert smoke evidence
+        run: >-
+          python3 -c
+          "import json; r=json.load(open('/tmp/mini-aws-smoke.json')); assert r['value']==100; assert r['summary']['passed_checks']==18; assert r['summary']['failed_operations']==0; assert r['summary']['measured_operations']==18"
+      - name: Validate portfolio contract
+        shell: pwsh
+        run: ./tools/validate-project.ps1 -SkipDocker

@@ -86,10 +86,10 @@ projects:
   - id: 13
     name: mini-aws-emulator
     domain: cloud-emulation
-    stack: [go, sqlite, aws-sdk, docker]
-    proves: emulacao minima de APIs AWS
-    benchmark: conformance_tests_passed
-    reuse_from: [localstack]
+    stack: [go-1.25, aws-sdk-go-v2, kumo-0.25.3, docker]
+    proves: paridade local AWS para S3, SQS e DynamoDB com adaptadores desacoplados
+    benchmark: conformance_rate_percent, p95_operation_latency_ms, operations_per_second
+    reuse_from: [kumo, aws-sdk-go-v2, smithy-go]
   - id: 14
     name: event-sourcing-orders
     domain: backend

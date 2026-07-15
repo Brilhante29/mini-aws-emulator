@@ -1,0 +1,22 @@
+services:
+  kumo:
+    image: ghcr.io/sivchari/kumo:0.25.3@sha256:7ea090ae0b6d1d34615e8b7bd04a2f1cd864ec640a6826a91e90f40e975e196b
+    environment:
+      KUMO_LOG_LEVEL: warn
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:4566/health"]
+      interval: 1s
+      timeout: 1s
+      retries: 20
+  conformance:
+    build:
+      context: .
+      target: runner
+    environment:
+      CLOUD_PROVIDER: kumo
+      CLOUD_ENDPOINT: http://kumo:4566
+      AWS_REGION: us-east-1
+      BENCHMARK_ITERATIONS: 25
+    depends_on:
+      kumo:
+        condition: service_healthy

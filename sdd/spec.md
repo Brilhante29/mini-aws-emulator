@@ -1,63 +1,42 @@
-# Spec: mini-aws-emulator
+# Specification
 
-## Number
+Project: `13 - mini-aws-emulator`
 
-#13
+## Intent
 
-## Claim
+Provide a reproducible local-cloud compatibility harness that proves selected S3, SQS, and DynamoDB behavior through the same AWS SDK v2 adapter that can target real AWS.
 
-Este projeto prova que: emulacao minima de APIs AWS.
+## User-Visible Claim
 
-## Stack
+A single Docker run produces numeric JSON showing scoped conformance, operation latency, throughput, startup time, coverage, failures, provider identity, and SDK diagnostics.
 
-go, sqlite, aws-sdk, docker
+## In Scope
 
-## User-visible output
+- Six S3 behavior checks.
+- Six SQS behavior checks.
+- Six DynamoDB behavior checks.
+- Nine measured operations per iteration.
+- Kumo local-first execution.
+- Guarded real AWS configuration.
+- Provider-independent ports and an in-memory fake.
+- Two committed benchmark runs.
 
-- Docker command: pending
-- README opens with: # #13 mini-aws-emulator
-- Benchmark table: conformance_tests_passed
+## Out Of Scope
 
-## Scope
+- Implementing an AWS emulator.
+- Full AWS conformance.
+- IAM, quotas, multi-region, managed durability, and production retry semantics.
+- A web API, UI, broker, Kubernetes deployment, or Terraform.
+- Real AWS execution in CI.
 
-In:
+## Acceptance Criteria
 
-- Implementar o menor produto funcional que prove o claim.
-- Rodar por Docker.
-- Gerar benchmark JSON reproduzivel.
-
-Out:
-
-- Publicar repo antes do primeiro resultado numerico.
-- Depender de segredo pago para o caminho default.
-
-## Architecture
-
-`	xt
-client -> app -> domain -> adapters -> benchmark output
-`
-
-## Benchmark
-
-Primary metric:
-
-- name: conformance_tests_passed
-- target: first reproducible baseline
-- command: pending
-- result file: enchmarks/results/*.json
-
-## Dataset or fixture
-
-- source: pending
-- size: pending
-- license: pending
-- deterministic seed: 42
-
-## Definition of done
-
-- [ ] Docker command works from clean clone.
-- [ ] README starts with project number and benchmark result.
-- [ ] Benchmark command writes JSON result.
-- [ ] Tests cover core behavior.
-- [ ] REFERENCES.md explains reuse.
-- [ ] No secret or paid credential required for default demo.
+- [x] `docker run --rm mini-aws-emulator` exits zero on Kumo.
+- [x] All 18 scoped checks pass.
+- [x] All 225 measured operations succeed.
+- [x] Primary metric is `conformance_rate_percent=100`.
+- [x] Core coverage is at least 75%.
+- [x] Kumo release and digest are present in result JSON.
+- [x] Known SDK close warnings are numeric, while unrelated warnings remain visible.
+- [x] Real AWS is refused without explicit opt-in and run ID.
+- [x] README opens with the committed benchmark number.
