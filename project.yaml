@@ -8,7 +8,7 @@ program:
     - provider version and digest evidence
     - local-to-real AWS adapter switch
     - SDK compatibility diagnostic counter
-status: published
+status: benchmarked
 claim: "One AWS SDK v2 adapter preserves 18 scoped S3, SQS, and DynamoDB behaviors when switched between pinned Kumo and real AWS configuration."
 stack:
   - go-1.25.10
