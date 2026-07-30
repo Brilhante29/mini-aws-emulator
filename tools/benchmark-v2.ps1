@@ -160,7 +160,7 @@ try {
       cloud_provider_mode = "kumo-local-first"
     }
     provenance = $provenance
-    comparability_key = "aws-compatibility:1.0.0:kumo-$kumoVersion:aws-sdk-go-v2-1.41.9:go1.25.10:amd64"
+    comparability_key = "aws-compatibility:1.0.0:kumo-${kumoVersion}:aws-sdk-go-v2-1.41.9:go1.25.10:amd64"
   }
   [IO.File]::WriteAllText((Join-Path $root $OutputPath),(($v2 | ConvertTo-Json -Depth 12) + [Environment]::NewLine),(New-Object Text.UTF8Encoding($false)))
   $v2 | ConvertTo-Json -Depth 12
