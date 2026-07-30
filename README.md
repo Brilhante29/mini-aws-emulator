@@ -1,8 +1,8 @@
-# #13 mini-aws-emulator: 100% scoped conformance at 2.121 ms p95
+# #13 mini-aws-emulator: 100% scoped conformance at 1.771 ms p95
 
 **Claim:** one AWS SDK v2 adapter preserves 18 scoped S3, SQS, and DynamoDB behaviors when switched between pinned Kumo and real AWS configuration.
 
-**Benchmark:** `18/18` checks, `225` measured operations, `2.121 ms` p95, `754.371 ops/s`, and zero functional failures.
+**Benchmark:** `18/18` checks, `225` measured operations, `1.771 ms` p95, `794.836 ops/s`, and zero functional failures.
 
 [![CI](https://github.com/Brilhante29/mini-aws-emulator/actions/workflows/ci.yml/badge.svg)](https://github.com/Brilhante29/mini-aws-emulator/actions/workflows/ci.yml)
 
@@ -51,11 +51,11 @@ docker compose up --build --abort-on-container-exit --exit-code-from conformance
 |---|---:|---:|---|
 | conformance_rate_percent | 100 | 100 | exactly 100 |
 | passed_checks | 18/18 | 18/18 | all |
-| p95_operation_latency_ms | 2.121 | 1.688 | lower |
-| operations_per_second | 754.371 | 758.296 | higher |
+| p95_operation_latency_ms | 1.771 | 1.571 | lower |
+| operations_per_second | 794.836 | 836.32 | higher |
 | measured_operations | 225 | 225 | fixed |
 | failed_operations | 0 | 0 | exactly 0 |
-| startup_ms | 107.621 | 59.671 | lower |
+| startup_ms | 106.319 | 54.87 | lower |
 | core_coverage_percent | 81.2 | 81.2 | >= 75 |
 | sdk_response_close_warnings | 83 | 83 | diagnostic |
 
@@ -63,7 +63,7 @@ Inputs: 25 iterations of nine operations after the conformance suite and resourc
 
 Environment: Docker Desktop 27.4.0, Linux/amd64, 16 CPUs, 16.45 GB Docker memory, Go 1.25.10, AWS SDK Go v2 1.41.9, Smithy Go 1.26.0, and Kumo 0.25.3. The Kumo image is pinned to `sha256:7ea090ae0b6d1d34615e8b7bd04a2f1cd864ec640a6826a91e90f40e975e196b`.
 
-The primary result was identical. Confirmation throughput differed by 0.52%; its p95 was 20.42% lower, expected at this sub-3 ms scale on Docker Desktop. Measured on 2026-07-15.
+The primary result remained 100%. Confirmation throughput differed by 5.22%; its p95 was 11.29% lower, expected at this sub-3 ms scale on Docker Desktop. V2 records three runs and aggregates latency explicitly. Measured on 2026-07-30.
 
 Committed evidence:
 

@@ -1,5 +1,6 @@
 id: 13
 name: mini-aws-emulator
+manifest_version: 2
 program:
   id: backend-reliability-platform
   narrative_fit: "Adds a local-cloud compatibility boundary that later gateway, outbox, event, and infrastructure projects can reuse without requiring an AWS account."
@@ -119,7 +120,7 @@ design_system:
     - references_table
   diagram_required: true
 reuse:
-  kit_version: cea7f9f
+  kit_version: 1ddbda4
   uses:
     - catalog
     - programs
@@ -140,6 +141,8 @@ benchmark:
   unit: percent
   command: "powershell -NoProfile -ExecutionPolicy Bypass -File tools/benchmark.ps1"
   result_path: benchmarks/results/kumo-baseline.json
+  publication_result_path: benchmarks/publication/kumo-baseline-v2.json
+  evidence_status: current
 release:
   docker: docker run --rm mini-aws-emulator
   no_secret_default_path: true

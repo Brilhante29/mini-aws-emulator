@@ -5,8 +5,8 @@ Project: `13 - mini-aws-emulator`
 ## Current State
 
 - Implementation: complete
-- Baseline: `100%`, p95 `2.121 ms`, `754.371 ops/s`
-- Confirmation: `100%`, p95 `1.688 ms`, `758.296 ops/s`
+- Baseline: `100%`, p95 `1.771 ms`, `794.836 ops/s`
+- Confirmation: `100%`, p95 `1.571 ms`, `836.32 ops/s`
 - Kit dependency: `cea7f9f`
 - Default provider: pinned Kumo 0.25.3
 - Real AWS: guarded and intentionally unverified in CI

@@ -53,3 +53,8 @@ The conformance suite and setup warm SDK clients and Kumo before the measured lo
 ## Interpretation
 
 Conformance is the primary proof and must remain stable. Sub-3 ms p95 values are sensitive to local scheduler noise, so latency is reported, not generalized to AWS or production. The deterministic 83 close-warning diagnostics document an emulator/SDK compatibility gap and do not replace behavioral assertions.
+
+## Publication V2
+
+The V2 producer executes three independent Kumo runs, reports minimum conformance, median p95, mean throughput, maximum failures, and records go.sum, app image, Kumo image, fixture, and configuration digests.
+The local Kumo result is not an AWS production performance claim.

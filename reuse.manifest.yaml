@@ -1,0 +1,20 @@
+kit_version: 1ddbda4
+project: mini-aws-emulator
+consumed:
+  - contract: project-manifest-v2
+    source: contracts/project.schema.json
+  - contract: benchmark-v2
+    source: contracts/benchmark-result-v2.schema.json
+  - automation: exact-head-publication
+    source: tools/verify-github-publication.ps1
+  - pattern: local-first-cloud-matrix
+    source: decision-brain/cloud-matrix.yaml
+contributed:
+  - generic: Go/Kumo multi-run benchmark provenance pattern
+    candidate_for: go-backend and cloud-local-first families
+  - generic: provider digest as environment evidence
+    candidate_for: local-first cloud family
+project_specific_stays_local:
+  - S3/SQS/DynamoDB scoped conformance checks
+  - AWS SDK adapter implementation
+  - Kumo warning diagnostic semantics

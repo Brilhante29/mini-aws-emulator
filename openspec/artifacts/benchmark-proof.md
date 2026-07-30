@@ -4,12 +4,13 @@
 
 - Metric: `conformance_rate_percent`
 - Unit: `percent`
-- Result: conformance_rate_percent = 100 percent
-- Result path: `benchmarks/results/kumo-baseline.json`
+- Result: V2 aggregate conformance_rate_percent = 100 percent across three Kumo runs
+- V1 result path: `benchmarks/results/kumo-baseline.json`
+- V2 publication path: `benchmarks/publication/kumo-baseline-v2.json`
 
 ## Command
 
-    powershell -NoProfile -ExecutionPolicy Bypass -File tools/benchmark.ps1
+    powershell -NoProfile -ExecutionPolicy Bypass -File tools/benchmark-v2.ps1
 
 ## Evidence
 

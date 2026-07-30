@@ -2,15 +2,18 @@ param(
     [string]$Image = "mini-aws-emulator",
     [int]$Iterations = 25,
     [int]$Repeat = 1,
-    [string]$OutputFile = "kumo-baseline.json"
+    [string]$OutputFile = "kumo-baseline.json",
+    [switch]$SkipBuild
 )
 $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $PSScriptRoot
 $results = Join-Path $root "benchmarks/results"
 New-Item -ItemType Directory -Force -Path $results | Out-Null
 
-& docker build -t $Image $root
-if ($LASTEXITCODE -ne 0) { throw "Docker build failed" }
+if (-not $SkipBuild) {
+    & docker build -t $Image $root
+    if ($LASTEXITCODE -ne 0) { throw "Docker build failed" }
+}
 
 $output = & docker run --rm `
     -e "BENCHMARK_ITERATIONS=$Iterations" `
