@@ -5,9 +5,10 @@ Project: `13 - mini-aws-emulator`
 ## Current State
 
 - Implementation: complete
-- Baseline: `100%`, p95 `1.771 ms`, `794.836 ops/s`
-- Confirmation: `100%`, p95 `1.571 ms`, `836.32 ops/s`
-- Kit dependency: `cea7f9f`
+- V1 baseline: `100%`, p95 `1.715 ms`, `730.145 ops/s`
+- V1 confirmation: `100%`, p95 `1.605 ms`, `850.726 ops/s`
+- V2 publication candidate: `100%`, median p95 `1.704 ms`, mean `764.682 ops/s`, three runs
+- Kit dependency: `1ddbda4`
 - Default provider: pinned Kumo 0.25.3
 - Real AWS: guarded and intentionally unverified in CI
 
@@ -18,8 +19,8 @@ Project: `13 - mini-aws-emulator`
 | architecture | problem forces, cloud matrix | ports and dependency rule |
 | cloud local-first | Kumo release, AWS SDK | pinned runtime and provider switch |
 | Go implementation | ports and spec | adapter, suites, tests |
-| benchmark | behavior contract | two JSON evidence files |
-| reuse review | project discoveries | kit commit `cea7f9f` |
+| benchmark | behavior contract | three raw JSON runs plus V2 publication artifact |
+| reuse review | project discoveries | kit commit `1ddbda4`, with provider-provenance follow-up |
 | publication | README, CI, benchmark | public evidence |
 
 ## Invariants

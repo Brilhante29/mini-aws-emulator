@@ -18,6 +18,6 @@
 ## Publication
 
 - [x] Validate project.
-- [x] Confirm published CI is green.
+- [ ] Confirm exact-head CI is green for the commit containing V2 evidence.
 - [x] Confirm article uses committed benchmark result.
 - [x] Confirm `voice-check.md` verdict is aligned or intentionally overridden.

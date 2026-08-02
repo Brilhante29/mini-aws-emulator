@@ -35,7 +35,8 @@ Required functional thresholds:
 5. Run 25 iterations of nine operations: three per service.
 6. Measure each operation wall-clock duration and total successful throughput.
 7. Clean resources, write JSON, and fail the process on any mismatch.
-8. Repeat once and commit both JSON results.
+8. Repeat once for the V1 confirmation and commit both V1 JSON results.
+9. Run the V2 producer three times, aggregate the policy fields, retain every raw JSON result, and validate the publication artifact against the central schema.
 
 The conformance suite and setup warm SDK clients and Kumo before the measured loop. Setup and cleanup durations are excluded from p95 and throughput.
 

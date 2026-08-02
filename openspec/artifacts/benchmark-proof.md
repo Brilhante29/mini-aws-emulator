@@ -14,6 +14,13 @@
 
 ## Evidence
 
+| Artifact | Purpose |
+|---|---|
+| `benchmarks/results/kumo-baseline.json` | V1 baseline: 18/18, 1.715 ms p95, 730.145 ops/s |
+| `benchmarks/results/kumo-confirmation.json` | V1 confirmation: 18/18, 1.605 ms p95, 850.726 ops/s |
+| `benchmarks/results/kumo-publication-run-3.json` | Third independent V2 repetition |
+| `benchmarks/publication/kumo-baseline-v2.json` | Publication aggregate and provenance |
 
+V2 policy: minimum conformance, median p95, mean throughput, maximum failures, and minimum coverage across three independent Docker runs. The artifact passed `benchmark-result-v2.schema.json` with zero errors.
 
 The README/post number must come from the committed benchmark JSON, not from manual text.

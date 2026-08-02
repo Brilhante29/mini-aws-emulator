@@ -1,0 +1,352 @@
+{
+    "schema_version":  2,
+    "run_id":  "56469f6f-43db-4ae6-93b2-f902d1119462",
+    "project":  "mini-aws-emulator",
+    "benchmark_id":  "aws.compatibility.v1",
+    "workload":  {
+                     "version":  "1.0.0",
+                     "fixture_digest":  "sha256:7ed03d203ebbfd017e0c69e98c4b69c17d4551558ed397cd744dddd177be7825",
+                     "config_digest":  "sha256:41c200f43ac0b8174774f194ba21993f05050f129f9f927676ccd75f30b38c5f",
+                     "warmup_iterations":  0,
+                     "measured_iterations":  225,
+                     "concurrency":  1
+                 },
+    "metrics":  [
+                    {
+                        "name":  "conformance_rate_percent",
+                        "value":  100,
+                        "unit":  "percent",
+                        "direction":  "target",
+                        "samples":  [
+                                        100,
+                                        100,
+                                        100
+                                    ],
+                        "failures":  0,
+                        "summary":  {
+                                        "aggregation":  "minimum_conformance_mean_throughput_median_p95_max_failures",
+                                        "repetitions":  3,
+                                        "conformance_rate_percent":  100,
+                                        "p95_operation_latency_ms":  1.704,
+                                        "operations_per_second":  764.682,
+                                        "measured_operations_per_run":  225,
+                                        "failed_operations":  0,
+                                        "coverage_percent":  81.2,
+                                        "sdk_response_close_warnings":  83,
+                                        "runs":  [
+                                                     {
+                                                         "conformance_rate_percent":  100,
+                                                         "p95_operation_latency_ms":  1.715,
+                                                         "operations_per_second":  730.145,
+                                                         "measured_operations":  225,
+                                                         "failed_operations":  0,
+                                                         "coverage_percent":  81.2,
+                                                         "sdk_response_close_warnings":  83
+                                                     },
+                                                     {
+                                                         "conformance_rate_percent":  100,
+                                                         "p95_operation_latency_ms":  1.605,
+                                                         "operations_per_second":  850.726,
+                                                         "measured_operations":  225,
+                                                         "failed_operations":  0,
+                                                         "coverage_percent":  81.2,
+                                                         "sdk_response_close_warnings":  83
+                                                     },
+                                                     {
+                                                         "conformance_rate_percent":  100,
+                                                         "p95_operation_latency_ms":  1.704,
+                                                         "operations_per_second":  713.176,
+                                                         "measured_operations":  225,
+                                                         "failed_operations":  0,
+                                                         "coverage_percent":  81.2,
+                                                         "sdk_response_close_warnings":  83
+                                                     }
+                                                 ]
+                                    }
+                    },
+                    {
+                        "name":  "p95_operation_latency_ms",
+                        "value":  1.704,
+                        "unit":  "milliseconds",
+                        "direction":  "lower_is_better",
+                        "samples":  [
+                                        1.715,
+                                        1.605,
+                                        1.704
+                                    ],
+                        "failures":  0,
+                        "summary":  {
+                                        "aggregation":  "minimum_conformance_mean_throughput_median_p95_max_failures",
+                                        "repetitions":  3,
+                                        "conformance_rate_percent":  100,
+                                        "p95_operation_latency_ms":  1.704,
+                                        "operations_per_second":  764.682,
+                                        "measured_operations_per_run":  225,
+                                        "failed_operations":  0,
+                                        "coverage_percent":  81.2,
+                                        "sdk_response_close_warnings":  83,
+                                        "runs":  [
+                                                     {
+                                                         "conformance_rate_percent":  100,
+                                                         "p95_operation_latency_ms":  1.715,
+                                                         "operations_per_second":  730.145,
+                                                         "measured_operations":  225,
+                                                         "failed_operations":  0,
+                                                         "coverage_percent":  81.2,
+                                                         "sdk_response_close_warnings":  83
+                                                     },
+                                                     {
+                                                         "conformance_rate_percent":  100,
+                                                         "p95_operation_latency_ms":  1.605,
+                                                         "operations_per_second":  850.726,
+                                                         "measured_operations":  225,
+                                                         "failed_operations":  0,
+                                                         "coverage_percent":  81.2,
+                                                         "sdk_response_close_warnings":  83
+                                                     },
+                                                     {
+                                                         "conformance_rate_percent":  100,
+                                                         "p95_operation_latency_ms":  1.704,
+                                                         "operations_per_second":  713.176,
+                                                         "measured_operations":  225,
+                                                         "failed_operations":  0,
+                                                         "coverage_percent":  81.2,
+                                                         "sdk_response_close_warnings":  83
+                                                     }
+                                                 ]
+                                    }
+                    },
+                    {
+                        "name":  "operations_per_second",
+                        "value":  764.682,
+                        "unit":  "operations_per_second",
+                        "direction":  "higher_is_better",
+                        "samples":  [
+                                        730.145,
+                                        850.726,
+                                        713.176
+                                    ],
+                        "failures":  0,
+                        "summary":  {
+                                        "aggregation":  "minimum_conformance_mean_throughput_median_p95_max_failures",
+                                        "repetitions":  3,
+                                        "conformance_rate_percent":  100,
+                                        "p95_operation_latency_ms":  1.704,
+                                        "operations_per_second":  764.682,
+                                        "measured_operations_per_run":  225,
+                                        "failed_operations":  0,
+                                        "coverage_percent":  81.2,
+                                        "sdk_response_close_warnings":  83,
+                                        "runs":  [
+                                                     {
+                                                         "conformance_rate_percent":  100,
+                                                         "p95_operation_latency_ms":  1.715,
+                                                         "operations_per_second":  730.145,
+                                                         "measured_operations":  225,
+                                                         "failed_operations":  0,
+                                                         "coverage_percent":  81.2,
+                                                         "sdk_response_close_warnings":  83
+                                                     },
+                                                     {
+                                                         "conformance_rate_percent":  100,
+                                                         "p95_operation_latency_ms":  1.605,
+                                                         "operations_per_second":  850.726,
+                                                         "measured_operations":  225,
+                                                         "failed_operations":  0,
+                                                         "coverage_percent":  81.2,
+                                                         "sdk_response_close_warnings":  83
+                                                     },
+                                                     {
+                                                         "conformance_rate_percent":  100,
+                                                         "p95_operation_latency_ms":  1.704,
+                                                         "operations_per_second":  713.176,
+                                                         "measured_operations":  225,
+                                                         "failed_operations":  0,
+                                                         "coverage_percent":  81.2,
+                                                         "sdk_response_close_warnings":  83
+                                                     }
+                                                 ]
+                                    }
+                    },
+                    {
+                        "name":  "failed_operations",
+                        "value":  0,
+                        "unit":  "operations",
+                        "direction":  "target",
+                        "samples":  [
+                                        0,
+                                        0,
+                                        0
+                                    ],
+                        "failures":  0,
+                        "summary":  {
+                                        "aggregation":  "minimum_conformance_mean_throughput_median_p95_max_failures",
+                                        "repetitions":  3,
+                                        "conformance_rate_percent":  100,
+                                        "p95_operation_latency_ms":  1.704,
+                                        "operations_per_second":  764.682,
+                                        "measured_operations_per_run":  225,
+                                        "failed_operations":  0,
+                                        "coverage_percent":  81.2,
+                                        "sdk_response_close_warnings":  83,
+                                        "runs":  [
+                                                     {
+                                                         "conformance_rate_percent":  100,
+                                                         "p95_operation_latency_ms":  1.715,
+                                                         "operations_per_second":  730.145,
+                                                         "measured_operations":  225,
+                                                         "failed_operations":  0,
+                                                         "coverage_percent":  81.2,
+                                                         "sdk_response_close_warnings":  83
+                                                     },
+                                                     {
+                                                         "conformance_rate_percent":  100,
+                                                         "p95_operation_latency_ms":  1.605,
+                                                         "operations_per_second":  850.726,
+                                                         "measured_operations":  225,
+                                                         "failed_operations":  0,
+                                                         "coverage_percent":  81.2,
+                                                         "sdk_response_close_warnings":  83
+                                                     },
+                                                     {
+                                                         "conformance_rate_percent":  100,
+                                                         "p95_operation_latency_ms":  1.704,
+                                                         "operations_per_second":  713.176,
+                                                         "measured_operations":  225,
+                                                         "failed_operations":  0,
+                                                         "coverage_percent":  81.2,
+                                                         "sdk_response_close_warnings":  83
+                                                     }
+                                                 ]
+                                    }
+                    },
+                    {
+                        "name":  "core_coverage_percent",
+                        "value":  81.2,
+                        "unit":  "percent",
+                        "direction":  "target",
+                        "samples":  [
+                                        81.2,
+                                        81.2,
+                                        81.2
+                                    ],
+                        "failures":  0,
+                        "summary":  {
+                                        "aggregation":  "minimum_conformance_mean_throughput_median_p95_max_failures",
+                                        "repetitions":  3,
+                                        "conformance_rate_percent":  100,
+                                        "p95_operation_latency_ms":  1.704,
+                                        "operations_per_second":  764.682,
+                                        "measured_operations_per_run":  225,
+                                        "failed_operations":  0,
+                                        "coverage_percent":  81.2,
+                                        "sdk_response_close_warnings":  83,
+                                        "runs":  [
+                                                     {
+                                                         "conformance_rate_percent":  100,
+                                                         "p95_operation_latency_ms":  1.715,
+                                                         "operations_per_second":  730.145,
+                                                         "measured_operations":  225,
+                                                         "failed_operations":  0,
+                                                         "coverage_percent":  81.2,
+                                                         "sdk_response_close_warnings":  83
+                                                     },
+                                                     {
+                                                         "conformance_rate_percent":  100,
+                                                         "p95_operation_latency_ms":  1.605,
+                                                         "operations_per_second":  850.726,
+                                                         "measured_operations":  225,
+                                                         "failed_operations":  0,
+                                                         "coverage_percent":  81.2,
+                                                         "sdk_response_close_warnings":  83
+                                                     },
+                                                     {
+                                                         "conformance_rate_percent":  100,
+                                                         "p95_operation_latency_ms":  1.704,
+                                                         "operations_per_second":  713.176,
+                                                         "measured_operations":  225,
+                                                         "failed_operations":  0,
+                                                         "coverage_percent":  81.2,
+                                                         "sdk_response_close_warnings":  83
+                                                     }
+                                                 ]
+                                    }
+                    },
+                    {
+                        "name":  "sdk_response_close_warnings",
+                        "value":  83,
+                        "unit":  "diagnostics",
+                        "direction":  "target",
+                        "samples":  [
+                                        83,
+                                        83,
+                                        83
+                                    ],
+                        "failures":  0,
+                        "summary":  {
+                                        "aggregation":  "minimum_conformance_mean_throughput_median_p95_max_failures",
+                                        "repetitions":  3,
+                                        "conformance_rate_percent":  100,
+                                        "p95_operation_latency_ms":  1.704,
+                                        "operations_per_second":  764.682,
+                                        "measured_operations_per_run":  225,
+                                        "failed_operations":  0,
+                                        "coverage_percent":  81.2,
+                                        "sdk_response_close_warnings":  83,
+                                        "runs":  [
+                                                     {
+                                                         "conformance_rate_percent":  100,
+                                                         "p95_operation_latency_ms":  1.715,
+                                                         "operations_per_second":  730.145,
+                                                         "measured_operations":  225,
+                                                         "failed_operations":  0,
+                                                         "coverage_percent":  81.2,
+                                                         "sdk_response_close_warnings":  83
+                                                     },
+                                                     {
+                                                         "conformance_rate_percent":  100,
+                                                         "p95_operation_latency_ms":  1.605,
+                                                         "operations_per_second":  850.726,
+                                                         "measured_operations":  225,
+                                                         "failed_operations":  0,
+                                                         "coverage_percent":  81.2,
+                                                         "sdk_response_close_warnings":  83
+                                                     },
+                                                     {
+                                                         "conformance_rate_percent":  100,
+                                                         "p95_operation_latency_ms":  1.704,
+                                                         "operations_per_second":  713.176,
+                                                         "measured_operations":  225,
+                                                         "failed_operations":  0,
+                                                         "coverage_percent":  81.2,
+                                                         "sdk_response_close_warnings":  83
+                                                     }
+                                                 ]
+                                    }
+                    }
+                ],
+    "execution":  {
+                      "command":  "powershell -NoProfile -ExecutionPolicy Bypass -File tools/benchmark-v2.ps1 -Image mini-aws-emulator:benchmark -Iterations 25 -Repeat 3",
+                      "started_at":  "2026-07-30T21:28:25.7955023Z",
+                      "duration_seconds":  11.735,
+                      "exit_code":  0,
+                      "repeat":  3
+                  },
+    "environment":  {
+                        "runtime":  "Go 1.25.10, AWS SDK Go v2 1.41.9, Smithy Go 1.26.0, Kumo 0.25.3",
+                        "architecture":  "Linux amd64 Docker container",
+                        "hardware_class":  "local-docker",
+                        "kumo_digest":  "sha256:7ea090ae0b6d1d34615e8b7bd04a2f1cd864ec640a6826a91e90f40e975e196b",
+                        "cloud_provider_mode":  "kumo-local-first"
+                    },
+    "provenance":  {
+                       "source_commit":  "2f20ba67c3ca65e13a79272f88d3cc87291cbe3a",
+                       "clean_tree":  true,
+                       "image_ref":  "mini-aws-emulator:benchmark",
+                       "image_digest":  "sha256:97e54be0a2ca10a8b0735d24605def56e80594ff8ae0f6268003d404527555bc",
+                       "dependency_lock_digest":  "sha256:d3f5675ead85ec1e9278cb5158229b832c007a72a6c1cb513063a4ea8d44a0b1",
+                       "producer":  "local",
+                       "artifact_digest":  "sha256:789b3ab1397ad7c8cbd78eab3395b11b2e19cba1ad91cfd7a1a8a97aae2ff32d"
+                   },
+    "comparability_key":  "aws-compatibility:1.0.0:kumo-0.25.3:aws-sdk-go-v2-1.41.9:go1.25.10:amd64"
+}
