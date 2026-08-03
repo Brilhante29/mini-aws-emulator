@@ -12,5 +12,5 @@ Project: `13 - mini-aws-emulator`
 - [x] Architecture, technical decisions, and limits are documented.
 - [x] Reuse review points to a validated, published kit commit.
 - [x] Public repository exists.
-- [ ] GitHub Actions is green for the exact commit containing the V2 evidence.
-- [ ] Manifest status is `published`.
+- [x] GitHub Actions is green for the exact commit containing the V2 evidence (`33387db`, run `30772714926`).
+- [x] Manifest status is `published`.

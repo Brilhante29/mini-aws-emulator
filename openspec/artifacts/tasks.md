@@ -18,6 +18,6 @@
 ## Publication
 
 - [x] Validate project.
-- [ ] Confirm exact-head CI is green for the commit containing V2 evidence.
+- [x] Confirm exact-head CI is green for the commit containing V2 evidence (`33387db`, run `30772714926`).
 - [x] Confirm article uses committed benchmark result.
 - [x] Confirm `voice-check.md` verdict is aligned or intentionally overridden.

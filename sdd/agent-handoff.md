@@ -7,7 +7,9 @@ Project: `13 - mini-aws-emulator`
 - Implementation: complete
 - V1 baseline: `100%`, p95 `1.715 ms`, `730.145 ops/s`
 - V1 confirmation: `100%`, p95 `1.605 ms`, `850.726 ops/s`
-- V2 publication candidate: `100%`, median p95 `1.704 ms`, mean `764.682 ops/s`, three runs
+- V2 published evidence: `100%`, median p95 `1.704 ms`, mean `764.682 ops/s`, three runs
+- Benchmark source commit: `33387dbf8c31206bcc5fed4ed8ae8533d27c8fb8`
+- Source exact-head CI: `https://github.com/Brilhante29/mini-aws-emulator/actions/runs/30772714926`
 - Kit dependency: `1ddbda4`
 - Default provider: pinned Kumo 0.25.3
 - Real AWS: guarded and intentionally unverified in CI

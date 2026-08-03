@@ -17,7 +17,7 @@ Project: `13 - mini-aws-emulator`
 |---|---|---|---|---|
 | Kumo release tag and container tag differ, and a mutable image made the first build ambiguous. | `patch_now` | `decision-brain, docs, skills, validation` | Pin reviewed tag plus digest and reject mutable Kumo references. | completed in `1ddbda4` |
 | SDK/emulator compatibility warnings can be accidentally swallowed or flood CI. | `patch_now` | `cloud guidance, benchmark contract` | Require numeric diagnostics for intentionally handled SDK warnings. | completed in `1ddbda4` |
-| Multi-run provider benchmarks need common provenance without hiding project-specific aggregation. | `patch_now` | `benchmark producer, cloud guidance` | Reuse the generic V2 producer for standard workloads and keep the Kumo multi-run policy local. | ready for kit integration |
+| Multi-run provider benchmarks need common provenance without hiding project-specific aggregation. | `patch_now` | `benchmark producer, cloud guidance` | Reuse the generic V2 producer for standard workloads and keep the Kumo multi-run policy local. | completed in `6f557a0` |
 | A reusable Go cloud-conformance package could remove code in future cloud projects. | `backlog` | `harness` | Reassess after a second project needs the same three-port runner; do not abstract from one use. | recorded |
 | Project-specific S3/SQS/DynamoDB operation ports should move into the kit now. | `reject` | `project code` | Keep them here until another repository proves the same abstraction is shared. | rejected |
 
