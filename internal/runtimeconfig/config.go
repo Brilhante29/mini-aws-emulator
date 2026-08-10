@@ -20,6 +20,7 @@ type Config struct {
 	Endpoint   string
 	Region     string
 	RunID      string
+	Warmup     int
 	Iterations int
 	Timeout    time.Duration
 	Repeat     int
@@ -32,6 +33,7 @@ func FromEnv() (Config, error) {
 		Endpoint:   valueOrDefault("CLOUD_ENDPOINT", "http://127.0.0.1:4566"),
 		Region:     valueOrDefault("AWS_REGION", "us-east-1"),
 		RunID:      valueOrDefault("RUN_ID", "r1"),
+		Warmup:     intOrDefault("BENCHMARK_WARMUP_ITERATIONS", 5),
 		Iterations: intOrDefault("BENCHMARK_ITERATIONS", 25),
 		Timeout:    durationOrDefault("SUITE_TIMEOUT", 60*time.Second),
 		Repeat:     intOrDefault("REPEAT", 1),
@@ -55,6 +57,9 @@ func FromEnv() (Config, error) {
 	}
 	if cfg.Iterations < 1 || cfg.Iterations > 1000 {
 		return Config{}, fmt.Errorf("BENCHMARK_ITERATIONS must be between 1 and 1000")
+	}
+	if cfg.Warmup < 1 || cfg.Warmup > 100 {
+		return Config{}, fmt.Errorf("BENCHMARK_WARMUP_ITERATIONS must be between 1 and 100")
 	}
 	if cfg.Timeout <= 0 || cfg.Timeout > 15*time.Minute {
 		return Config{}, fmt.Errorf("SUITE_TIMEOUT must be greater than zero and at most 15 minutes")

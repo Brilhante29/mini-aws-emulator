@@ -17,6 +17,9 @@ func TestFromEnvDefaultsToKumo(t *testing.T) {
 	if cfg.Iterations != 25 {
 		t.Fatalf("Iterations = %d", cfg.Iterations)
 	}
+	if cfg.Warmup != 5 {
+		t.Fatalf("Warmup = %d", cfg.Warmup)
+	}
 }
 
 func TestFromEnvGuardsRealAWS(t *testing.T) {
@@ -46,10 +49,15 @@ func TestFromEnvRejectsUnsafeAndInvalidValues(t *testing.T) {
 	if _, err := FromEnv(); err == nil {
 		t.Fatal("expected invalid iterations error")
 	}
+	t.Setenv("BENCHMARK_ITERATIONS", "25")
+	t.Setenv("BENCHMARK_WARMUP_ITERATIONS", "0")
+	if _, err := FromEnv(); err == nil {
+		t.Fatal("expected invalid warmup error")
+	}
 }
 
 func clearConfigEnv(t *testing.T) {
-	for _, key := range []string{"CLOUD_PROVIDER", "CLOUD_ENDPOINT", "AWS_REGION", "RUN_ID", "BENCHMARK_ITERATIONS", "SUITE_TIMEOUT", "REPEAT", "RESULT_PATH", "ALLOW_REAL_AWS"} {
+	for _, key := range []string{"CLOUD_PROVIDER", "CLOUD_ENDPOINT", "AWS_REGION", "RUN_ID", "BENCHMARK_WARMUP_ITERATIONS", "BENCHMARK_ITERATIONS", "SUITE_TIMEOUT", "REPEAT", "RESULT_PATH", "ALLOW_REAL_AWS"} {
 		t.Setenv(key, "")
 	}
 }

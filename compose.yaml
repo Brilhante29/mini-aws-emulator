@@ -16,6 +16,7 @@ services:
       CLOUD_PROVIDER: kumo
       CLOUD_ENDPOINT: http://kumo:4566
       AWS_REGION: us-east-1
+      BENCHMARK_WARMUP_ITERATIONS: 5
       BENCHMARK_ITERATIONS: 25
     depends_on:
       kumo:

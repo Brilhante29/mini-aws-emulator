@@ -1,5 +1,6 @@
 param(
     [string]$Image = "mini-aws-emulator",
+    [int]$WarmupIterations = 5,
     [int]$Iterations = 25,
     [int]$Repeat = 1,
     [string]$OutputFile = "kumo-baseline.json",
@@ -17,6 +18,7 @@ if (-not $SkipBuild) {
 
 $output = & docker run --rm `
     -e "BENCHMARK_ITERATIONS=$Iterations" `
+    -e "BENCHMARK_WARMUP_ITERATIONS=$WarmupIterations" `
     -e "REPEAT=$Repeat" `
     $Image
 if ($LASTEXITCODE -ne 0) { throw "Docker benchmark failed" }

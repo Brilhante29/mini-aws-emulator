@@ -1,12 +1,15 @@
 param(
   [string]$Image = "mini-aws-emulator:benchmark",
+  [ValidateRange(1, 100)]
+  [int]$WarmupIterations = 5,
+  [ValidateRange(1, 1000)]
   [int]$Iterations = 25,
-  [ValidateRange(1, 10)]
+  [ValidateRange(3, 10)]
   [int]$Repeat = 3,
   [ValidateSet("local", "github-actions", "other-ci")]
   [string]$Producer = "local",
   [string]$CiRunUrl = "",
-  [string]$OutputPath = "benchmarks/publication/kumo-baseline-v2.json"
+  [string]$OutputPath = "benchmarks/results/kumo-baseline-v2.json"
 )
 
 $ErrorActionPreference = "Stop"
@@ -26,6 +29,13 @@ try {
     return $property.Value
   }
 
+  function Get-SHA256Text {
+    param([string]$Value)
+    $bytes = [Text.Encoding]::UTF8.GetBytes($Value)
+    $digest = [Security.Cryptography.SHA256]::Create().ComputeHash($bytes)
+    return "sha256:" + (([BitConverter]::ToString($digest) -replace "-", "").ToLowerInvariant())
+  }
+
   function Get-CombinedDigest {
     param([string[]]$RelativePaths)
     $lines = foreach ($relative in ($RelativePaths | Sort-Object)) {
@@ -34,9 +44,7 @@ try {
       $hash = (Get-FileHash -Algorithm SHA256 -LiteralPath $file).Hash.ToLowerInvariant()
       "${relative}|${hash}"
     }
-    $bytes = [Text.Encoding]::UTF8.GetBytes(($lines -join "`n") + "`n")
-    $digest = [Security.Cryptography.SHA256]::Create().ComputeHash($bytes)
-    return "sha256:" + (([BitConverter]::ToString($digest) -replace "-", "").ToLowerInvariant())
+    return Get-SHA256Text (($lines -join "`n") + "`n")
   }
 
   function Get-Median {
@@ -47,78 +55,146 @@ try {
     return ([double]$ordered[$middle - 1] + [double]$ordered[$middle]) / 2
   }
 
+  function Get-Sum {
+    param([double[]]$Values)
+    return [int](($Values | Measure-Object -Sum).Sum)
+  }
+
+  function New-Metric {
+    param(
+      [string]$Name,
+      [double]$Value,
+      [string]$Unit,
+      [string]$Direction,
+      [double[]]$Samples,
+      [int]$Failures,
+      [object]$Summary
+    )
+    return [ordered]@{
+      name = $Name
+      value = $Value
+      unit = $Unit
+      direction = $Direction
+      samples = @($Samples)
+      failures = $Failures
+      summary = $Summary
+    }
+  }
+
   $dockerText = Get-Content -Raw -LiteralPath (Join-Path $root "Dockerfile")
   $kumoMatch = [regex]::Match($dockerText, "ghcr\.io/sivchari/kumo:(?<version>[^@\s]+)@(?<digest>sha256:[0-9a-f]{64})")
   if (-not $kumoMatch.Success) { throw "Could not extract pinned Kumo version and digest." }
   $kumoVersion = $kumoMatch.Groups["version"].Value
   $kumoDigest = $kumoMatch.Groups["digest"].Value
-  $fixtureDigest = Get-CombinedDigest @("internal/conformance/suite.go", "internal/benchmark/benchmark.go", "internal/cloud/ports.go")
-  $configDigest = Get-CombinedDigest @("Dockerfile", "go.mod", "go.sum", "tools/benchmark.ps1")
+
+  $goModText = Get-Content -Raw -LiteralPath (Join-Path $root "go.mod")
+  $goMatch = [regex]::Match($goModText, "(?m)^toolchain go(?<version>[0-9.]+)$")
+  $sdkMatch = [regex]::Match($goModText, "(?m)^\s*github\.com/aws/aws-sdk-go-v2 v(?<version>[0-9.]+)$")
+  $smithyMatch = [regex]::Match($goModText, "(?m)^\s*github\.com/aws/smithy-go v(?<version>[0-9.]+)")
+  if (-not $goMatch.Success -or -not $sdkMatch.Success -or -not $smithyMatch.Success) { throw "Could not extract pinned Go/AWS SDK/Smithy versions." }
+  $goVersion = $goMatch.Groups["version"].Value
+  $sdkVersion = $sdkMatch.Groups["version"].Value
+  $smithyVersion = $smithyMatch.Groups["version"].Value
+
+  $fixtureDigest = Get-CombinedDigest @(
+    "internal/adapters/awssdk/adapter.go",
+    "internal/benchmark/benchmark.go",
+    "internal/cloud/ports.go",
+    "internal/conformance/suite.go"
+  )
+  $configDigest = Get-CombinedDigest @(
+    "Dockerfile",
+    "compose.yaml",
+    "go.mod",
+    "go.sum",
+    "internal/runtimeconfig/config.go",
+    "tools/benchmark.ps1",
+    "tools/benchmark-v2.ps1"
+  )
   $lockHash = (Get-FileHash -Algorithm SHA256 -LiteralPath (Join-Path $root "go.sum")).Hash.ToLowerInvariant()
   $startedAt = [DateTime]::UtcNow
   $timer = [Diagnostics.Stopwatch]::StartNew()
 
-  & docker build -t $Image $root
+  & docker build --build-arg "VERSION=$sourceCommit" -t $Image $root
   if ($LASTEXITCODE -ne 0) { throw "Docker image build failed." }
-  $resultNames = New-Object System.Collections.Generic.List[string]
+
   $rawResults = New-Object System.Collections.Generic.List[object]
   for ($run = 1; $run -le $Repeat; $run++) {
-    $resultName = if ($run -eq 1) { "kumo-baseline.json" } elseif ($run -eq 2) { "kumo-confirmation.json" } else { "kumo-publication-run-$run.json" }
-    $resultNames.Add($resultName)
-    & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $root "tools/benchmark.ps1") -Image $Image -Iterations $Iterations -Repeat $run -OutputFile $resultName -SkipBuild
+    $output = & docker run --rm `
+      -e "BENCHMARK_WARMUP_ITERATIONS=$WarmupIterations" `
+      -e "BENCHMARK_ITERATIONS=$Iterations" `
+      -e "REPEAT=$run" `
+      -e "RUN_ID=r$run" `
+      $Image
     if ($LASTEXITCODE -ne 0) { throw "Docker benchmark failed on repetition $run." }
-    $rawResults.Add((Get-Content -Raw -LiteralPath (Join-Path $root "benchmarks/results/$resultName") | ConvertFrom-Json))
+    try {
+      $raw = (($output -join "`n") | ConvertFrom-Json)
+    } catch {
+      throw "Docker benchmark repetition $run returned invalid JSON: $($_.Exception.Message)"
+    }
+    if ($raw.environment.provider -ne "kumo") { throw "Repetition $run did not run against Kumo." }
+    if ($raw.environment.provider_digest -ne $kumoDigest) { throw "Repetition $run used an unexpected Kumo digest." }
+    if (@($raw.services) -join "," -ne "s3,sqs,dynamodb") { throw "Repetition $run did not exercise the scoped services." }
+    $rawResults.Add($raw)
   }
   $timer.Stop()
 
-  $conformanceSamples = @($rawResults | ForEach-Object { [double](Get-RequiredProperty $_ "value") })
-  $p95Samples = @($rawResults | ForEach-Object { [double](Get-RequiredProperty $_.summary "p95_operation_latency_ms") })
-  $throughputSamples = @($rawResults | ForEach-Object { [double](Get-RequiredProperty $_.summary "operations_per_second") })
-  $failedSamples = @($rawResults | ForEach-Object { [double](Get-RequiredProperty $_.summary "failed_operations") })
-  $coverageSamples = @($rawResults | ForEach-Object { [double](Get-RequiredProperty $_.summary "coverage_percent") })
-  $warningSamples = @($rawResults | ForEach-Object { [double](Get-RequiredProperty $_.summary "sdk_response_close_warnings") })
+  $conformanceSamples = [double[]]@($rawResults | ForEach-Object { [double](Get-RequiredProperty $_ "value") })
+  $p95Samples = [double[]]@($rawResults | ForEach-Object { [double](Get-RequiredProperty $_.summary "p95_operation_latency_ms") })
+  $throughputSamples = [double[]]@($rawResults | ForEach-Object { [double](Get-RequiredProperty $_.summary "operations_per_second") })
+  $failedSamples = [double[]]@($rawResults | ForEach-Object { [double](Get-RequiredProperty $_.summary "failed_operations") })
+  $coverageSamples = [double[]]@($rawResults | ForEach-Object { [double](Get-RequiredProperty $_.summary "coverage_percent") })
+  $warningSamples = [double[]]@($rawResults | ForEach-Object { [double](Get-RequiredProperty $_.summary "sdk_response_close_warnings") })
+  $conformanceFailures = [int](($rawResults | ForEach-Object { [int]$_.summary.total_checks - [int]$_.summary.passed_checks } | Measure-Object -Sum).Sum)
+  $operationFailures = Get-Sum $failedSamples
+  $conformance = [Math]::Round((($conformanceSamples | Measure-Object -Minimum).Minimum), 3)
   $p95 = [Math]::Round((Get-Median $p95Samples), 3)
-  $conformance = [Math]::Round((($conformanceSamples | Measure-Object -Minimum).Minimum), 2)
   $throughput = [Math]::Round((($throughputSamples | Measure-Object -Average).Average), 3)
-  $failed = [Math]::Round((($failedSamples | Measure-Object -Maximum).Maximum), 0)
-  $coverage = [Math]::Round((($coverageSamples | Measure-Object -Minimum).Minimum), 2)
-  $warnings = [Math]::Round((($warningSamples | Measure-Object -Maximum).Maximum), 0)
-  $measured = [int](Get-RequiredProperty $rawResults[0].summary "measured_operations")
-  $imageDigest = (& docker image inspect --format "{{.Id}}" $Image).Trim()
-  if ($imageDigest -notmatch "^sha256:[0-9a-f]{64}$") { throw "Docker did not return a content digest." }
+  $coverage = [Math]::Round((($coverageSamples | Measure-Object -Minimum).Minimum), 3)
+  $warnings = [int](($warningSamples | Measure-Object -Maximum).Maximum)
+  $measuredOperations = $Iterations * 9
+  $warmupOperations = $WarmupIterations * 9
 
   $runSummaries = @($rawResults | ForEach-Object {
     [ordered]@{
+      repeat = [int]$_.repeat
       conformance_rate_percent = [double]$_.value
       p95_operation_latency_ms = [double]$_.summary.p95_operation_latency_ms
       operations_per_second = [double]$_.summary.operations_per_second
       measured_operations = [int]$_.summary.measured_operations
+      warmup_operations = [int]$_.summary.warmup_operations
       failed_operations = [int]$_.summary.failed_operations
       coverage_percent = [double]$_.summary.coverage_percent
       sdk_response_close_warnings = [int]$_.summary.sdk_response_close_warnings
     }
   })
   $aggregateSummary = [ordered]@{
-    aggregation = "minimum_conformance_mean_throughput_median_p95_max_failures"
+    aggregation = "minimum_conformance_mean_throughput_median_latency_sum_failures"
     repetitions = $Repeat
-    conformance_rate_percent = $conformance
-    p95_operation_latency_ms = $p95
-    operations_per_second = $throughput
-    measured_operations_per_run = $measured
-    failed_operations = $failed
-    coverage_percent = $coverage
-    sdk_response_close_warnings = $warnings
+    provider = "kumo"
+    protocol_client = "official AWS SDK for Go v2"
+    services = @("s3", "sqs", "dynamodb")
+    scoped_checks_per_run = 18
+    operations_per_iteration = 9
+    warmup_iterations_per_run = $WarmupIterations
+    measured_iterations_per_run = $Iterations
     runs = $runSummaries
   }
   $metrics = @(
-    [ordered]@{ name = "conformance_rate_percent"; value = $conformance; unit = "percent"; direction = "target"; samples = @($conformanceSamples); failures = [int]($conformance -lt 100); summary = $aggregateSummary },
-    [ordered]@{ name = "p95_operation_latency_ms"; value = $p95; unit = "milliseconds"; direction = "lower_is_better"; samples = @($p95Samples); failures = 0; summary = $aggregateSummary },
-    [ordered]@{ name = "operations_per_second"; value = $throughput; unit = "operations_per_second"; direction = "higher_is_better"; samples = @($throughputSamples); failures = [int]($failed -gt 0); summary = $aggregateSummary },
-    [ordered]@{ name = "failed_operations"; value = $failed; unit = "operations"; direction = "target"; samples = @($failedSamples); failures = [int]($failed -gt 0); summary = $aggregateSummary },
-    [ordered]@{ name = "core_coverage_percent"; value = $coverage; unit = "percent"; direction = "target"; samples = @($coverageSamples); failures = [int]($coverage -lt 75); summary = $aggregateSummary },
-    [ordered]@{ name = "sdk_response_close_warnings"; value = $warnings; unit = "diagnostics"; direction = "target"; samples = @($warningSamples); failures = 0; summary = $aggregateSummary }
+    (New-Metric "conformance_rate_percent" $conformance "percent" "target" $conformanceSamples $conformanceFailures $aggregateSummary),
+    (New-Metric "p95_operation_latency_ms" $p95 "milliseconds" "lower_is_better" $p95Samples $operationFailures $aggregateSummary),
+    (New-Metric "operations_per_second" $throughput "operations_per_second" "higher_is_better" $throughputSamples $operationFailures $aggregateSummary),
+    (New-Metric "failed_operations" ([double]$operationFailures) "operations" "target" $failedSamples $operationFailures $aggregateSummary),
+    (New-Metric "core_coverage_percent" $coverage "percent" "target" $coverageSamples ([int]($coverage -lt 75)) $aggregateSummary),
+    (New-Metric "sdk_response_close_warnings" ([double]$warnings) "diagnostics" "target" $warningSamples 0 $aggregateSummary)
   )
-  $artifactDigest = Get-CombinedDigest @($resultNames | ForEach-Object { "benchmarks/results/$_" })
+
+  $imageDigest = (& docker image inspect --format "{{.Id}}" $Image).Trim()
+  $imageArchitecture = (& docker image inspect --format "{{.Architecture}}" $Image).Trim()
+  if ($imageDigest -notmatch "^sha256:[0-9a-f]{64}$") { throw "Docker did not return a content digest." }
+  if ([string]::IsNullOrWhiteSpace($imageArchitecture)) { throw "Docker did not return the image architecture." }
+  $rawSummaryJSON = ($runSummaries | ConvertTo-Json -Depth 8 -Compress)
+
   $provenance = [ordered]@{
     source_commit = $sourceCommit
     clean_tree = $true
@@ -126,48 +202,61 @@ try {
     image_digest = $imageDigest
     dependency_lock_digest = "sha256:$lockHash"
     producer = $Producer
-    artifact_digest = $artifactDigest
+    artifact_digest = Get-SHA256Text $rawSummaryJSON
   }
   if ($CiRunUrl) { $provenance.ci_run_url = $CiRunUrl }
-  $output = Join-Path $root $OutputPath
-  New-Item -ItemType Directory -Force -Path (Split-Path -Parent $output) | Out-Null
+
+  $hardwareClass = if ($Producer -eq "github-actions") { "github-hosted-runner" } else { "local-docker" }
   $v2 = [ordered]@{
     schema_version = 2
     run_id = [guid]::NewGuid().ToString()
     project = "mini-aws-emulator"
-    benchmark_id = "aws.compatibility.v1"
+    benchmark_id = "aws-sdk-kumo-conformance"
     workload = [ordered]@{
-      version = "1.0.0"
+      version = "2.0.0"
       fixture_digest = $fixtureDigest
       config_digest = $configDigest
-      warmup_iterations = 0
-      measured_iterations = $measured
+      warmup_iterations = $warmupOperations
+      measured_iterations = $measuredOperations
       concurrency = 1
     }
     metrics = $metrics
     execution = [ordered]@{
-      command = "powershell -NoProfile -ExecutionPolicy Bypass -File tools/benchmark-v2.ps1 -Image $Image -Iterations $Iterations -Repeat $Repeat"
+      command = "pwsh -NoProfile -File tools/benchmark-v2.ps1 -Image $Image -WarmupIterations $WarmupIterations -Iterations $Iterations -Repeat $Repeat"
       started_at = $startedAt.ToString("o")
       duration_seconds = [Math]::Round($timer.Elapsed.TotalSeconds, 3)
       exit_code = 0
       repeat = $Repeat
     }
     environment = [ordered]@{
-      runtime = "Go 1.25.10, AWS SDK Go v2 1.41.9, Smithy Go 1.26.0, Kumo $kumoVersion"
-      architecture = "Linux amd64 Docker container"
-      hardware_class = "local-docker"
-      kumo_digest = $kumoDigest
+      runtime = "Go $goVersion; AWS SDK Go v2 $sdkVersion; Smithy Go $smithyVersion; Kumo $kumoVersion"
+      architecture = "linux/$imageArchitecture Docker image"
+      hardware_class = $hardwareClass
       cloud_provider_mode = "kumo-local-first"
+      provider_image = "ghcr.io/sivchari/kumo:$kumoVersion@$kumoDigest"
+      implemented_services = "s3,sqs,dynamodb"
+      aws_parity = "not_measured"
     }
     provenance = $provenance
-    comparability_key = "aws-compatibility:1.0.0:kumo-${kumoVersion}:aws-sdk-go-v2-1.41.9:go1.25.10:amd64"
+    comparability_key = "aws-sdk-kumo:2.0.0:kumo-${kumoVersion}:sdk-${sdkVersion}:go-${goVersion}:s3-sqs-dynamodb:warmup-${WarmupIterations}:measure-${Iterations}:c1"
   }
-  [IO.File]::WriteAllText((Join-Path $root $OutputPath),(($v2 | ConvertTo-Json -Depth 12) + [Environment]::NewLine),(New-Object Text.UTF8Encoding($false)))
-  $v2 | ConvertTo-Json -Depth 12
-  Write-Host "v2_result=$(Join-Path $root $OutputPath)"
+
+  if ($v2.execution.repeat -lt 3) { throw "V2 publication requires at least three repetitions." }
+  if ($v2.workload.warmup_iterations -lt 1) { throw "V2 publication requires real warmup operations." }
+  foreach ($metric in $v2.metrics) {
+    if (@($metric.samples).Count -ne $Repeat) { throw "Metric $($metric.name) does not retain one sample per repetition." }
+    if ($metric.failures -lt 0) { throw "Metric $($metric.name) has an invalid failure count." }
+  }
+  if ($conformance -ne 100 -or $operationFailures -ne 0) { throw "Functional benchmark gate failed." }
+
+  $output = Join-Path $root $OutputPath
+  New-Item -ItemType Directory -Force -Path (Split-Path -Parent $output) | Out-Null
+  [IO.File]::WriteAllText($output, (($v2 | ConvertTo-Json -Depth 14) + [Environment]::NewLine), [Text.UTF8Encoding]::new($false))
+  $v2 | ConvertTo-Json -Depth 14
+  Write-Host "v2_result=$output"
   Write-Host "source_commit=$sourceCommit"
   Write-Host "image_digest=$imageDigest"
-  Write-Host "artifact_digest=$artifactDigest"
+  Write-Host "artifact_digest=$($provenance.artifact_digest)"
 } finally {
   Pop-Location
 }

@@ -71,7 +71,7 @@ func run() error {
 		conformanceRate = report.Round3(float64(passed) * 100 / float64(len(checks)))
 	}
 
-	bench, err := benchmark.Run(ctx, adapter.Ports(), prefix+"-bench", cfg.Iterations)
+	bench, err := benchmark.Run(ctx, adapter.Ports(), prefix+"-bench", cfg.Warmup, cfg.Iterations)
 	if err != nil {
 		return err
 	}
@@ -104,20 +104,22 @@ func run() error {
 			P95OperationLatencyMS:    report.P95(bench.Durations),
 			OperationsPerSecond:      operationsPerSecond,
 			MeasuredOperations:       float64(measured),
+			WarmupOperations:         float64(bench.WarmupOperations),
 			FailedOperations:         float64(bench.Failed),
 			StartupMS:                report.Round3(float64(startup.Microseconds()) / 1000),
 			CoveragePercent:          readCoverage(),
 			SDKResponseCloseWarnings: float64(adapter.Diagnostics().ResponseCloseWarnings()),
 		},
 		Environment: map[string]string{
-			"provider":         cfg.Provider,
-			"provider_version": providerVersion,
-			"provider_digest":  providerDigest,
-			"runner_version":   version,
-			"go":               runtime.Version(),
-			"aws_sdk_go_v2":    awsSDKVersion,
-			"region":           cfg.Region,
-			"iterations":       strconv.Itoa(cfg.Iterations),
+			"provider":          cfg.Provider,
+			"provider_version":  providerVersion,
+			"provider_digest":   providerDigest,
+			"runner_version":    version,
+			"go":                runtime.Version(),
+			"aws_sdk_go_v2":     awsSDKVersion,
+			"region":            cfg.Region,
+			"iterations":        strconv.Itoa(cfg.Iterations),
+			"warmup_iterations": strconv.Itoa(cfg.Warmup),
 		},
 		Services: []string{"s3", "sqs", "dynamodb"},
 		Checks:   checks,

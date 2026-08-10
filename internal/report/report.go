@@ -23,6 +23,7 @@ type Summary struct {
 	P95OperationLatencyMS    float64 `json:"p95_operation_latency_ms"`
 	OperationsPerSecond      float64 `json:"operations_per_second"`
 	MeasuredOperations       float64 `json:"measured_operations"`
+	WarmupOperations         float64 `json:"warmup_operations"`
 	FailedOperations         float64 `json:"failed_operations"`
 	StartupMS                float64 `json:"startup_ms"`
 	CoveragePercent          float64 `json:"coverage_percent"`
