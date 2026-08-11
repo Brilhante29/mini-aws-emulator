@@ -1,13 +1,13 @@
 {
     "schema_version":  2,
-    "run_id":  "56469f6f-43db-4ae6-93b2-f902d1119462",
+    "run_id":  "8f4c00b5-52aa-45ec-b71f-74139ca4f3f1",
     "project":  "mini-aws-emulator",
-    "benchmark_id":  "aws.compatibility.v1",
+    "benchmark_id":  "aws-sdk-kumo-conformance",
     "workload":  {
-                     "version":  "1.0.0",
-                     "fixture_digest":  "sha256:7ed03d203ebbfd017e0c69e98c4b69c17d4551558ed397cd744dddd177be7825",
-                     "config_digest":  "sha256:41c200f43ac0b8174774f194ba21993f05050f129f9f927676ccd75f30b38c5f",
-                     "warmup_iterations":  0,
+                     "version":  "2.0.0",
+                     "fixture_digest":  "sha256:b51f4cdbb753cdcff5553d561164dae5cbe000dec6a0a66d423010df4fe7c839",
+                     "config_digest":  "sha256:6d7b0b39a7ce39891355e6d1a555c5a365425ac38a0b50d7829cedf53027f94f",
+                     "warmup_iterations":  45,
                      "measured_iterations":  225,
                      "concurrency":  1
                  },
@@ -24,146 +24,176 @@
                                     ],
                         "failures":  0,
                         "summary":  {
-                                        "aggregation":  "minimum_conformance_mean_throughput_median_p95_max_failures",
+                                        "aggregation":  "minimum_conformance_mean_throughput_median_latency_sum_failures",
                                         "repetitions":  3,
-                                        "conformance_rate_percent":  100,
-                                        "p95_operation_latency_ms":  1.704,
-                                        "operations_per_second":  764.682,
-                                        "measured_operations_per_run":  225,
-                                        "failed_operations":  0,
-                                        "coverage_percent":  81.2,
-                                        "sdk_response_close_warnings":  83,
+                                        "provider":  "kumo",
+                                        "protocol_client":  "official AWS SDK for Go v2",
+                                        "services":  [
+                                                         "s3",
+                                                         "sqs",
+                                                         "dynamodb"
+                                                     ],
+                                        "scoped_checks_per_run":  18,
+                                        "operations_per_iteration":  9,
+                                        "warmup_iterations_per_run":  5,
+                                        "measured_iterations_per_run":  25,
                                         "runs":  [
                                                      {
+                                                         "repeat":  1,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.715,
-                                                         "operations_per_second":  730.145,
+                                                         "p95_operation_latency_ms":  1.918,
+                                                         "operations_per_second":  724.089,
                                                          "measured_operations":  225,
+                                                         "warmup_operations":  45,
                                                          "failed_operations":  0,
                                                          "coverage_percent":  81.2,
-                                                         "sdk_response_close_warnings":  83
+                                                         "sdk_response_close_warnings":  98
                                                      },
                                                      {
+                                                         "repeat":  2,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.605,
-                                                         "operations_per_second":  850.726,
+                                                         "p95_operation_latency_ms":  1.531,
+                                                         "operations_per_second":  920.631,
                                                          "measured_operations":  225,
+                                                         "warmup_operations":  45,
                                                          "failed_operations":  0,
                                                          "coverage_percent":  81.2,
-                                                         "sdk_response_close_warnings":  83
+                                                         "sdk_response_close_warnings":  98
                                                      },
                                                      {
+                                                         "repeat":  3,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.704,
-                                                         "operations_per_second":  713.176,
+                                                         "p95_operation_latency_ms":  1.754,
+                                                         "operations_per_second":  731.221,
                                                          "measured_operations":  225,
+                                                         "warmup_operations":  45,
                                                          "failed_operations":  0,
                                                          "coverage_percent":  81.2,
-                                                         "sdk_response_close_warnings":  83
+                                                         "sdk_response_close_warnings":  98
                                                      }
                                                  ]
                                     }
                     },
                     {
                         "name":  "p95_operation_latency_ms",
-                        "value":  1.704,
+                        "value":  1.754,
                         "unit":  "milliseconds",
                         "direction":  "lower_is_better",
                         "samples":  [
-                                        1.715,
-                                        1.605,
-                                        1.704
+                                        1.918,
+                                        1.531,
+                                        1.754
                                     ],
                         "failures":  0,
                         "summary":  {
-                                        "aggregation":  "minimum_conformance_mean_throughput_median_p95_max_failures",
+                                        "aggregation":  "minimum_conformance_mean_throughput_median_latency_sum_failures",
                                         "repetitions":  3,
-                                        "conformance_rate_percent":  100,
-                                        "p95_operation_latency_ms":  1.704,
-                                        "operations_per_second":  764.682,
-                                        "measured_operations_per_run":  225,
-                                        "failed_operations":  0,
-                                        "coverage_percent":  81.2,
-                                        "sdk_response_close_warnings":  83,
+                                        "provider":  "kumo",
+                                        "protocol_client":  "official AWS SDK for Go v2",
+                                        "services":  [
+                                                         "s3",
+                                                         "sqs",
+                                                         "dynamodb"
+                                                     ],
+                                        "scoped_checks_per_run":  18,
+                                        "operations_per_iteration":  9,
+                                        "warmup_iterations_per_run":  5,
+                                        "measured_iterations_per_run":  25,
                                         "runs":  [
                                                      {
+                                                         "repeat":  1,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.715,
-                                                         "operations_per_second":  730.145,
+                                                         "p95_operation_latency_ms":  1.918,
+                                                         "operations_per_second":  724.089,
                                                          "measured_operations":  225,
+                                                         "warmup_operations":  45,
                                                          "failed_operations":  0,
                                                          "coverage_percent":  81.2,
-                                                         "sdk_response_close_warnings":  83
+                                                         "sdk_response_close_warnings":  98
                                                      },
                                                      {
+                                                         "repeat":  2,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.605,
-                                                         "operations_per_second":  850.726,
+                                                         "p95_operation_latency_ms":  1.531,
+                                                         "operations_per_second":  920.631,
                                                          "measured_operations":  225,
+                                                         "warmup_operations":  45,
                                                          "failed_operations":  0,
                                                          "coverage_percent":  81.2,
-                                                         "sdk_response_close_warnings":  83
+                                                         "sdk_response_close_warnings":  98
                                                      },
                                                      {
+                                                         "repeat":  3,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.704,
-                                                         "operations_per_second":  713.176,
+                                                         "p95_operation_latency_ms":  1.754,
+                                                         "operations_per_second":  731.221,
                                                          "measured_operations":  225,
+                                                         "warmup_operations":  45,
                                                          "failed_operations":  0,
                                                          "coverage_percent":  81.2,
-                                                         "sdk_response_close_warnings":  83
+                                                         "sdk_response_close_warnings":  98
                                                      }
                                                  ]
                                     }
                     },
                     {
                         "name":  "operations_per_second",
-                        "value":  764.682,
+                        "value":  791.98,
                         "unit":  "operations_per_second",
                         "direction":  "higher_is_better",
                         "samples":  [
-                                        730.145,
-                                        850.726,
-                                        713.176
+                                        724.089,
+                                        920.631,
+                                        731.221
                                     ],
                         "failures":  0,
                         "summary":  {
-                                        "aggregation":  "minimum_conformance_mean_throughput_median_p95_max_failures",
+                                        "aggregation":  "minimum_conformance_mean_throughput_median_latency_sum_failures",
                                         "repetitions":  3,
-                                        "conformance_rate_percent":  100,
-                                        "p95_operation_latency_ms":  1.704,
-                                        "operations_per_second":  764.682,
-                                        "measured_operations_per_run":  225,
-                                        "failed_operations":  0,
-                                        "coverage_percent":  81.2,
-                                        "sdk_response_close_warnings":  83,
+                                        "provider":  "kumo",
+                                        "protocol_client":  "official AWS SDK for Go v2",
+                                        "services":  [
+                                                         "s3",
+                                                         "sqs",
+                                                         "dynamodb"
+                                                     ],
+                                        "scoped_checks_per_run":  18,
+                                        "operations_per_iteration":  9,
+                                        "warmup_iterations_per_run":  5,
+                                        "measured_iterations_per_run":  25,
                                         "runs":  [
                                                      {
+                                                         "repeat":  1,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.715,
-                                                         "operations_per_second":  730.145,
+                                                         "p95_operation_latency_ms":  1.918,
+                                                         "operations_per_second":  724.089,
                                                          "measured_operations":  225,
+                                                         "warmup_operations":  45,
                                                          "failed_operations":  0,
                                                          "coverage_percent":  81.2,
-                                                         "sdk_response_close_warnings":  83
+                                                         "sdk_response_close_warnings":  98
                                                      },
                                                      {
+                                                         "repeat":  2,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.605,
-                                                         "operations_per_second":  850.726,
+                                                         "p95_operation_latency_ms":  1.531,
+                                                         "operations_per_second":  920.631,
                                                          "measured_operations":  225,
+                                                         "warmup_operations":  45,
                                                          "failed_operations":  0,
                                                          "coverage_percent":  81.2,
-                                                         "sdk_response_close_warnings":  83
+                                                         "sdk_response_close_warnings":  98
                                                      },
                                                      {
+                                                         "repeat":  3,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.704,
-                                                         "operations_per_second":  713.176,
+                                                         "p95_operation_latency_ms":  1.754,
+                                                         "operations_per_second":  731.221,
                                                          "measured_operations":  225,
+                                                         "warmup_operations":  45,
                                                          "failed_operations":  0,
                                                          "coverage_percent":  81.2,
-                                                         "sdk_response_close_warnings":  83
+                                                         "sdk_response_close_warnings":  98
                                                      }
                                                  ]
                                     }
@@ -180,42 +210,52 @@
                                     ],
                         "failures":  0,
                         "summary":  {
-                                        "aggregation":  "minimum_conformance_mean_throughput_median_p95_max_failures",
+                                        "aggregation":  "minimum_conformance_mean_throughput_median_latency_sum_failures",
                                         "repetitions":  3,
-                                        "conformance_rate_percent":  100,
-                                        "p95_operation_latency_ms":  1.704,
-                                        "operations_per_second":  764.682,
-                                        "measured_operations_per_run":  225,
-                                        "failed_operations":  0,
-                                        "coverage_percent":  81.2,
-                                        "sdk_response_close_warnings":  83,
+                                        "provider":  "kumo",
+                                        "protocol_client":  "official AWS SDK for Go v2",
+                                        "services":  [
+                                                         "s3",
+                                                         "sqs",
+                                                         "dynamodb"
+                                                     ],
+                                        "scoped_checks_per_run":  18,
+                                        "operations_per_iteration":  9,
+                                        "warmup_iterations_per_run":  5,
+                                        "measured_iterations_per_run":  25,
                                         "runs":  [
                                                      {
+                                                         "repeat":  1,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.715,
-                                                         "operations_per_second":  730.145,
+                                                         "p95_operation_latency_ms":  1.918,
+                                                         "operations_per_second":  724.089,
                                                          "measured_operations":  225,
+                                                         "warmup_operations":  45,
                                                          "failed_operations":  0,
                                                          "coverage_percent":  81.2,
-                                                         "sdk_response_close_warnings":  83
+                                                         "sdk_response_close_warnings":  98
                                                      },
                                                      {
+                                                         "repeat":  2,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.605,
-                                                         "operations_per_second":  850.726,
+                                                         "p95_operation_latency_ms":  1.531,
+                                                         "operations_per_second":  920.631,
                                                          "measured_operations":  225,
+                                                         "warmup_operations":  45,
                                                          "failed_operations":  0,
                                                          "coverage_percent":  81.2,
-                                                         "sdk_response_close_warnings":  83
+                                                         "sdk_response_close_warnings":  98
                                                      },
                                                      {
+                                                         "repeat":  3,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.704,
-                                                         "operations_per_second":  713.176,
+                                                         "p95_operation_latency_ms":  1.754,
+                                                         "operations_per_second":  731.221,
                                                          "measured_operations":  225,
+                                                         "warmup_operations":  45,
                                                          "failed_operations":  0,
                                                          "coverage_percent":  81.2,
-                                                         "sdk_response_close_warnings":  83
+                                                         "sdk_response_close_warnings":  98
                                                      }
                                                  ]
                                     }
@@ -232,121 +272,143 @@
                                     ],
                         "failures":  0,
                         "summary":  {
-                                        "aggregation":  "minimum_conformance_mean_throughput_median_p95_max_failures",
+                                        "aggregation":  "minimum_conformance_mean_throughput_median_latency_sum_failures",
                                         "repetitions":  3,
-                                        "conformance_rate_percent":  100,
-                                        "p95_operation_latency_ms":  1.704,
-                                        "operations_per_second":  764.682,
-                                        "measured_operations_per_run":  225,
-                                        "failed_operations":  0,
-                                        "coverage_percent":  81.2,
-                                        "sdk_response_close_warnings":  83,
+                                        "provider":  "kumo",
+                                        "protocol_client":  "official AWS SDK for Go v2",
+                                        "services":  [
+                                                         "s3",
+                                                         "sqs",
+                                                         "dynamodb"
+                                                     ],
+                                        "scoped_checks_per_run":  18,
+                                        "operations_per_iteration":  9,
+                                        "warmup_iterations_per_run":  5,
+                                        "measured_iterations_per_run":  25,
                                         "runs":  [
                                                      {
+                                                         "repeat":  1,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.715,
-                                                         "operations_per_second":  730.145,
+                                                         "p95_operation_latency_ms":  1.918,
+                                                         "operations_per_second":  724.089,
                                                          "measured_operations":  225,
+                                                         "warmup_operations":  45,
                                                          "failed_operations":  0,
                                                          "coverage_percent":  81.2,
-                                                         "sdk_response_close_warnings":  83
+                                                         "sdk_response_close_warnings":  98
                                                      },
                                                      {
+                                                         "repeat":  2,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.605,
-                                                         "operations_per_second":  850.726,
+                                                         "p95_operation_latency_ms":  1.531,
+                                                         "operations_per_second":  920.631,
                                                          "measured_operations":  225,
+                                                         "warmup_operations":  45,
                                                          "failed_operations":  0,
                                                          "coverage_percent":  81.2,
-                                                         "sdk_response_close_warnings":  83
+                                                         "sdk_response_close_warnings":  98
                                                      },
                                                      {
+                                                         "repeat":  3,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.704,
-                                                         "operations_per_second":  713.176,
+                                                         "p95_operation_latency_ms":  1.754,
+                                                         "operations_per_second":  731.221,
                                                          "measured_operations":  225,
+                                                         "warmup_operations":  45,
                                                          "failed_operations":  0,
                                                          "coverage_percent":  81.2,
-                                                         "sdk_response_close_warnings":  83
+                                                         "sdk_response_close_warnings":  98
                                                      }
                                                  ]
                                     }
                     },
                     {
                         "name":  "sdk_response_close_warnings",
-                        "value":  83,
+                        "value":  98,
                         "unit":  "diagnostics",
                         "direction":  "target",
                         "samples":  [
-                                        83,
-                                        83,
-                                        83
+                                        98,
+                                        98,
+                                        98
                                     ],
                         "failures":  0,
                         "summary":  {
-                                        "aggregation":  "minimum_conformance_mean_throughput_median_p95_max_failures",
+                                        "aggregation":  "minimum_conformance_mean_throughput_median_latency_sum_failures",
                                         "repetitions":  3,
-                                        "conformance_rate_percent":  100,
-                                        "p95_operation_latency_ms":  1.704,
-                                        "operations_per_second":  764.682,
-                                        "measured_operations_per_run":  225,
-                                        "failed_operations":  0,
-                                        "coverage_percent":  81.2,
-                                        "sdk_response_close_warnings":  83,
+                                        "provider":  "kumo",
+                                        "protocol_client":  "official AWS SDK for Go v2",
+                                        "services":  [
+                                                         "s3",
+                                                         "sqs",
+                                                         "dynamodb"
+                                                     ],
+                                        "scoped_checks_per_run":  18,
+                                        "operations_per_iteration":  9,
+                                        "warmup_iterations_per_run":  5,
+                                        "measured_iterations_per_run":  25,
                                         "runs":  [
                                                      {
+                                                         "repeat":  1,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.715,
-                                                         "operations_per_second":  730.145,
+                                                         "p95_operation_latency_ms":  1.918,
+                                                         "operations_per_second":  724.089,
                                                          "measured_operations":  225,
+                                                         "warmup_operations":  45,
                                                          "failed_operations":  0,
                                                          "coverage_percent":  81.2,
-                                                         "sdk_response_close_warnings":  83
+                                                         "sdk_response_close_warnings":  98
                                                      },
                                                      {
+                                                         "repeat":  2,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.605,
-                                                         "operations_per_second":  850.726,
+                                                         "p95_operation_latency_ms":  1.531,
+                                                         "operations_per_second":  920.631,
                                                          "measured_operations":  225,
+                                                         "warmup_operations":  45,
                                                          "failed_operations":  0,
                                                          "coverage_percent":  81.2,
-                                                         "sdk_response_close_warnings":  83
+                                                         "sdk_response_close_warnings":  98
                                                      },
                                                      {
+                                                         "repeat":  3,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.704,
-                                                         "operations_per_second":  713.176,
+                                                         "p95_operation_latency_ms":  1.754,
+                                                         "operations_per_second":  731.221,
                                                          "measured_operations":  225,
+                                                         "warmup_operations":  45,
                                                          "failed_operations":  0,
                                                          "coverage_percent":  81.2,
-                                                         "sdk_response_close_warnings":  83
+                                                         "sdk_response_close_warnings":  98
                                                      }
                                                  ]
                                     }
                     }
                 ],
     "execution":  {
-                      "command":  "powershell -NoProfile -ExecutionPolicy Bypass -File tools/benchmark-v2.ps1 -Image mini-aws-emulator:benchmark -Iterations 25 -Repeat 3",
-                      "started_at":  "2026-07-30T21:28:25.7955023Z",
-                      "duration_seconds":  11.735,
+                      "command":  "pwsh -NoProfile -File tools/benchmark-v2.ps1 -Image mini-aws-emulator:benchmark -WarmupIterations 5 -Iterations 25 -Repeat 3",
+                      "started_at":  "2026-08-10T06:13:36.9885471Z",
+                      "duration_seconds":  177.783,
                       "exit_code":  0,
                       "repeat":  3
                   },
     "environment":  {
-                        "runtime":  "Go 1.25.10, AWS SDK Go v2 1.41.9, Smithy Go 1.26.0, Kumo 0.25.3",
-                        "architecture":  "Linux amd64 Docker container",
+                        "runtime":  "Go 1.25.10; AWS SDK Go v2 1.41.9; Smithy Go 1.26.0; Kumo 0.25.3",
+                        "architecture":  "linux/amd64 Docker image",
                         "hardware_class":  "local-docker",
-                        "kumo_digest":  "sha256:7ea090ae0b6d1d34615e8b7bd04a2f1cd864ec640a6826a91e90f40e975e196b",
-                        "cloud_provider_mode":  "kumo-local-first"
+                        "cloud_provider_mode":  "kumo-local-first",
+                        "provider_image":  "ghcr.io/sivchari/kumo:0.25.3@sha256:7ea090ae0b6d1d34615e8b7bd04a2f1cd864ec640a6826a91e90f40e975e196b",
+                        "implemented_services":  "s3,sqs,dynamodb",
+                        "aws_parity":  "not_measured"
                     },
     "provenance":  {
-                       "source_commit":  "2f20ba67c3ca65e13a79272f88d3cc87291cbe3a",
+                       "source_commit":  "fa2ece581f946bf7be9016b8dcaf832b5f2d2980",
                        "clean_tree":  true,
                        "image_ref":  "mini-aws-emulator:benchmark",
-                       "image_digest":  "sha256:97e54be0a2ca10a8b0735d24605def56e80594ff8ae0f6268003d404527555bc",
+                       "image_digest":  "sha256:5f394b9e76778b19939b81ad034a410c36b7a62a99a8046838aa9b7039817417",
                        "dependency_lock_digest":  "sha256:d3f5675ead85ec1e9278cb5158229b832c007a72a6c1cb513063a4ea8d44a0b1",
                        "producer":  "local",
-                       "artifact_digest":  "sha256:789b3ab1397ad7c8cbd78eab3395b11b2e19cba1ad91cfd7a1a8a97aae2ff32d"
+                       "artifact_digest":  "sha256:45c662ee4dae4b6be67d3f7acc7931e500f0022c703d2d5b6fe3b2fca0fd0de7"
                    },
-    "comparability_key":  "aws-compatibility:1.0.0:kumo-0.25.3:aws-sdk-go-v2-1.41.9:go1.25.10:amd64"
+    "comparability_key":  "aws-sdk-kumo:2.0.0:kumo-0.25.3:sdk-1.41.9:go-1.25.10:s3-sqs-dynamodb:warmup-5:measure-25:c1"
 }

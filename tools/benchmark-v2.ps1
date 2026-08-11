@@ -9,7 +9,10 @@ param(
   [ValidateSet("local", "github-actions", "other-ci")]
   [string]$Producer = "local",
   [string]$CiRunUrl = "",
-  [string]$OutputPath = "benchmarks/results/kumo-baseline-v2.json"
+  # Must match publication_result_path in project.yaml: writing the V2 contract
+  # under benchmarks/results left the declared publication path holding stale
+  # evidence from an older commit.
+  [string]$OutputPath = "benchmarks/publication/kumo-baseline-v2.json"
 )
 
 $ErrorActionPreference = "Stop"
