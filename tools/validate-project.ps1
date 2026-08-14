@@ -54,7 +54,9 @@ $requiredFiles = @(
   "sdd/architecture-decision.md",
   "sdd/technical-decision.md",
   "sdd/agent-handoff.md",
-  "sdd/reuse-improvement-review.md"
+  "sdd/reuse-improvement-review.md",
+  "tools/validate-benchmark-v2.py",
+  ".portfolio/contracts/benchmark-result-v2.schema.json"
 )
 foreach ($file in $requiredFiles) { Require-File $file }
 
@@ -155,6 +157,12 @@ if ($manifestResultPath -ne "") {
       if ($primaryResult.PSObject.Properties.Name -contains "metric") {
         $resultMetric = [string]$primaryResult.metric
         $resultValue = $primaryResult.value
+      } elseif ($primaryResult.schema_version -eq 2 -and $primaryResult.PSObject.Properties.Name -contains "metrics") {
+        $selectedMetric = @($primaryResult.metrics | Where-Object { $_.name -eq $manifestPrimaryMetric })
+        if ($selectedMetric.Count -eq 1) {
+          $resultMetric = [string]$selectedMetric[0].name
+          $resultValue = $selectedMetric[0].value
+        }
       } elseif ($primaryResult.PSObject.Properties.Name -contains "primary_metric") {
         $resultMetric = [string]$primaryResult.primary_metric
         $metricProperty = $primaryResult.PSObject.Properties[$resultMetric]
@@ -185,6 +193,18 @@ if ($manifestResultPath -ne "") {
 }
 Push-Location -LiteralPath $root
 try {
+  $v2ValidatorPath = Join-Path $root "tools/validate-benchmark-v2.py"
+  $pythonCommand = Get-Command python -ErrorAction SilentlyContinue
+  if ((Test-Path -LiteralPath $v2ValidatorPath -PathType Leaf) -and $manifestResultPath -ne "") {
+    if ($pythonCommand) {
+      Invoke-Checked "benchmark V2 contract" { python $v2ValidatorPath }
+    } elseif ($SkipDocker) {
+      Add-Failure "Python is required to validate the benchmark V2 contract when Docker validation is skipped"
+    } else {
+      Write-Host "python_toolchain=not_found; relying on CI for benchmark V2 contract validation"
+    }
+  }
+
   foreach ($file in $benchmarkFiles) {
     Invoke-Checked "benchmark JSON validation: $($file.Name)" { python -m json.tool $file.FullName | Out-Null }
   }

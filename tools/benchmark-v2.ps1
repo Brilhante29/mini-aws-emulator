@@ -42,12 +42,31 @@ try {
   function Get-CombinedDigest {
     param([string[]]$RelativePaths)
     $lines = foreach ($relative in ($RelativePaths | Sort-Object)) {
-      $file = Join-Path $root $relative
-      if (-not (Test-Path -LiteralPath $file -PathType Leaf)) { throw "Digest input missing: $relative" }
-      $hash = (Get-FileHash -Algorithm SHA256 -LiteralPath $file).Hash.ToLowerInvariant()
+      $hash = Get-GitBlobSHA256 $relative
       "${relative}|${hash}"
     }
     return Get-SHA256Text (($lines -join "`n") + "`n")
+  }
+
+  function Get-GitBlobSHA256 {
+    param([string]$RelativePath)
+    $startInfo = [Diagnostics.ProcessStartInfo]::new()
+    $startInfo.FileName = "git"
+    $startInfo.Arguments = "cat-file blob `"${sourceCommit}:${RelativePath}`""
+    $startInfo.WorkingDirectory = $root
+    $startInfo.UseShellExecute = $false
+    $startInfo.RedirectStandardOutput = $true
+    $startInfo.RedirectStandardError = $true
+    $process = [Diagnostics.Process]::new()
+    $process.StartInfo = $startInfo
+    if (-not $process.Start()) { throw "Could not read Git blob: $RelativePath" }
+    $stream = [IO.MemoryStream]::new()
+    $process.StandardOutput.BaseStream.CopyTo($stream)
+    $stderr = $process.StandardError.ReadToEnd()
+    $process.WaitForExit()
+    if ($process.ExitCode -ne 0) { throw "Could not read Git blob ${RelativePath}: $stderr" }
+    $digest = [Security.Cryptography.SHA256]::Create().ComputeHash($stream.ToArray())
+    return (([BitConverter]::ToString($digest) -replace "-", "").ToLowerInvariant())
   }
 
   function Get-Median {
@@ -114,7 +133,7 @@ try {
     "tools/benchmark.ps1",
     "tools/benchmark-v2.ps1"
   )
-  $lockHash = (Get-FileHash -Algorithm SHA256 -LiteralPath (Join-Path $root "go.sum")).Hash.ToLowerInvariant()
+  $lockHash = Get-GitBlobSHA256 "go.sum"
   $startedAt = [DateTime]::UtcNow
   $timer = [Diagnostics.Stopwatch]::StartNew()
 

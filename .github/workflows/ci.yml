@@ -14,6 +14,8 @@ jobs:
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          fetch-depth: 0
       - uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6.0.0
         with:
           go-version-file: go.mod
@@ -35,6 +37,8 @@ jobs:
         run: >-
           python3 -c
           "import json; r=json.load(open('/tmp/mini-aws-smoke.json')); assert r['value']==100; assert r['summary']['passed_checks']==18; assert r['summary']['failed_operations']==0; assert r['summary']['measured_operations']==18"
+      - name: Validate committed V2 evidence
+        run: python3 tools/validate-benchmark-v2.py
       - name: Validate portfolio contract
         shell: pwsh
         run: ./tools/validate-project.ps1 -SkipDocker

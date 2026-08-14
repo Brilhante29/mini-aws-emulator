@@ -139,8 +139,8 @@ reuse:
 benchmark:
   primary_metric: conformance_rate_percent
   unit: percent
-  command: "powershell -NoProfile -ExecutionPolicy Bypass -File tools/benchmark.ps1"
-  result_path: benchmarks/results/kumo-baseline.json
+  command: "powershell -NoProfile -ExecutionPolicy Bypass -File tools/benchmark-v2.ps1 -Repeat 3"
+  result_path: benchmarks/publication/kumo-baseline-v2.json
   publication_result_path: benchmarks/publication/kumo-baseline-v2.json
   evidence_status: current
 release:
