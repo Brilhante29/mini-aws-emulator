@@ -36,7 +36,7 @@ Required functional thresholds:
 6. Measure each operation wall-clock duration and total successful throughput.
 7. Clean resources, write JSON, and fail the process on any mismatch.
 8. Repeat once for the V1 confirmation and commit both V1 JSON results.
-9. Run the V2 producer three times, aggregate the policy fields, retain every raw JSON result, and validate the publication artifact against the central schema.
+9. Run the V2 producer three times, aggregate the policy fields, retain every per-run sample and structured summary, and validate the publication artifact against the central schema.
 
 The conformance suite and setup warm SDK clients and Kumo before the measured loop. Setup and cleanup durations are excluded from p95 and throughput.
 
@@ -53,9 +53,9 @@ The conformance suite and setup warm SDK clients and Kumo before the measured lo
 
 ## Interpretation
 
-Conformance is the primary proof and must remain stable. Sub-3 ms p95 values are sensitive to local scheduler noise, so latency is reported, not generalized to AWS or production. The deterministic 83 close-warning diagnostics document an emulator/SDK compatibility gap and do not replace behavioral assertions.
+Conformance is the primary proof and must remain stable. Single-digit local p95 values are sensitive to scheduler noise, so latency is reported, not generalized to AWS or production. The deterministic 98 close-warning diagnostics include conformance, setup, warmup, measured calls, and document an emulator/SDK compatibility gap without replacing behavioral assertions.
 
 ## Publication V2
 
-The V2 producer executes three independent Kumo runs, reports minimum conformance, median p95, mean throughput, maximum failures, and records go.sum, app image, Kumo image, fixture, and configuration digests.
+The V2 producer executes three independent Kumo runs, reports minimum conformance, median p95, mean throughput, summed failures, and records the app image, Kumo image, and canonical Git-blob digests for go.sum, fixture, and configuration inputs.
 The local Kumo result is not an AWS production performance claim.

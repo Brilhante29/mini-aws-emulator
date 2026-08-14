@@ -18,6 +18,7 @@
 ## Publication
 
 - [x] Validate project.
-- [x] Confirm exact-head CI is green for the commit containing V2 evidence (`33387db`, run `30772714926`).
+- [x] Validate the exact local evidence with schema, provenance, Docker, test, vet, and coverage gates.
+- [ ] Confirm exact-head CI after a future push; this task explicitly forbids push.
 - [x] Confirm article uses committed benchmark result.
 - [x] Confirm `voice-check.md` verdict is aligned or intentionally overridden.

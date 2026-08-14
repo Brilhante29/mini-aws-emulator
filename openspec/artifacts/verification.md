@@ -11,14 +11,15 @@
 - README.md
 - sdd/spec.md
 - sdd/technical-decision.md
-- Benchmark result: `benchmarks/results/kumo-baseline.json`
+- Benchmark result: `benchmarks/publication/kumo-baseline-v2.json`
 
 ## Checks
 
 - Component pack selected: `backend-reliability-platform`
 - Benchmark line: conformance_rate_percent = 100 percent
+- V2 contract: three repetitions, pinned Kumo, AWS SDK Go v2, canonical source provenance
 - Voice verdict: aligned
 
 ## Remaining Risk
 
-The generated plan is a starting point. Re-run this tool or edit the artifacts when code, benchmark, or architecture decisions change.
+The final local head still requires a GitHub Actions run after a future push. Local schema, provenance, Docker, test, vet, coverage, and functional gates are complete.

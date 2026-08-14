@@ -1,12 +1,12 @@
 {
     "schema_version":  2,
-    "run_id":  "8f4c00b5-52aa-45ec-b71f-74139ca4f3f1",
+    "run_id":  "3260fa73-cc22-41bd-8ab4-30ec077dd80c",
     "project":  "mini-aws-emulator",
     "benchmark_id":  "aws-sdk-kumo-conformance",
     "workload":  {
                      "version":  "2.0.0",
                      "fixture_digest":  "sha256:b51f4cdbb753cdcff5553d561164dae5cbe000dec6a0a66d423010df4fe7c839",
-                     "config_digest":  "sha256:6d7b0b39a7ce39891355e6d1a555c5a365425ac38a0b50d7829cedf53027f94f",
+                     "config_digest":  "sha256:a5d103e8091d7a453b84bd8369095063a6f93935e76d899db9aa9e17b2b00e4b",
                      "warmup_iterations":  45,
                      "measured_iterations":  225,
                      "concurrency":  1
@@ -41,8 +41,8 @@
                                                      {
                                                          "repeat":  1,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.918,
-                                                         "operations_per_second":  724.089,
+                                                         "p95_operation_latency_ms":  5.294,
+                                                         "operations_per_second":  422.462,
                                                          "measured_operations":  225,
                                                          "warmup_operations":  45,
                                                          "failed_operations":  0,
@@ -52,8 +52,8 @@
                                                      {
                                                          "repeat":  2,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.531,
-                                                         "operations_per_second":  920.631,
+                                                         "p95_operation_latency_ms":  4.764,
+                                                         "operations_per_second":  474.574,
                                                          "measured_operations":  225,
                                                          "warmup_operations":  45,
                                                          "failed_operations":  0,
@@ -63,8 +63,8 @@
                                                      {
                                                          "repeat":  3,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.754,
-                                                         "operations_per_second":  731.221,
+                                                         "p95_operation_latency_ms":  3.659,
+                                                         "operations_per_second":  539.598,
                                                          "measured_operations":  225,
                                                          "warmup_operations":  45,
                                                          "failed_operations":  0,
@@ -76,13 +76,13 @@
                     },
                     {
                         "name":  "p95_operation_latency_ms",
-                        "value":  1.754,
+                        "value":  4.764,
                         "unit":  "milliseconds",
                         "direction":  "lower_is_better",
                         "samples":  [
-                                        1.918,
-                                        1.531,
-                                        1.754
+                                        5.294,
+                                        4.764,
+                                        3.659
                                     ],
                         "failures":  0,
                         "summary":  {
@@ -103,8 +103,8 @@
                                                      {
                                                          "repeat":  1,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.918,
-                                                         "operations_per_second":  724.089,
+                                                         "p95_operation_latency_ms":  5.294,
+                                                         "operations_per_second":  422.462,
                                                          "measured_operations":  225,
                                                          "warmup_operations":  45,
                                                          "failed_operations":  0,
@@ -114,8 +114,8 @@
                                                      {
                                                          "repeat":  2,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.531,
-                                                         "operations_per_second":  920.631,
+                                                         "p95_operation_latency_ms":  4.764,
+                                                         "operations_per_second":  474.574,
                                                          "measured_operations":  225,
                                                          "warmup_operations":  45,
                                                          "failed_operations":  0,
@@ -125,8 +125,8 @@
                                                      {
                                                          "repeat":  3,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.754,
-                                                         "operations_per_second":  731.221,
+                                                         "p95_operation_latency_ms":  3.659,
+                                                         "operations_per_second":  539.598,
                                                          "measured_operations":  225,
                                                          "warmup_operations":  45,
                                                          "failed_operations":  0,
@@ -138,13 +138,13 @@
                     },
                     {
                         "name":  "operations_per_second",
-                        "value":  791.98,
+                        "value":  478.878,
                         "unit":  "operations_per_second",
                         "direction":  "higher_is_better",
                         "samples":  [
-                                        724.089,
-                                        920.631,
-                                        731.221
+                                        422.462,
+                                        474.574,
+                                        539.598
                                     ],
                         "failures":  0,
                         "summary":  {
@@ -165,8 +165,8 @@
                                                      {
                                                          "repeat":  1,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.918,
-                                                         "operations_per_second":  724.089,
+                                                         "p95_operation_latency_ms":  5.294,
+                                                         "operations_per_second":  422.462,
                                                          "measured_operations":  225,
                                                          "warmup_operations":  45,
                                                          "failed_operations":  0,
@@ -176,8 +176,8 @@
                                                      {
                                                          "repeat":  2,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.531,
-                                                         "operations_per_second":  920.631,
+                                                         "p95_operation_latency_ms":  4.764,
+                                                         "operations_per_second":  474.574,
                                                          "measured_operations":  225,
                                                          "warmup_operations":  45,
                                                          "failed_operations":  0,
@@ -187,8 +187,8 @@
                                                      {
                                                          "repeat":  3,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.754,
-                                                         "operations_per_second":  731.221,
+                                                         "p95_operation_latency_ms":  3.659,
+                                                         "operations_per_second":  539.598,
                                                          "measured_operations":  225,
                                                          "warmup_operations":  45,
                                                          "failed_operations":  0,
@@ -227,8 +227,8 @@
                                                      {
                                                          "repeat":  1,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.918,
-                                                         "operations_per_second":  724.089,
+                                                         "p95_operation_latency_ms":  5.294,
+                                                         "operations_per_second":  422.462,
                                                          "measured_operations":  225,
                                                          "warmup_operations":  45,
                                                          "failed_operations":  0,
@@ -238,8 +238,8 @@
                                                      {
                                                          "repeat":  2,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.531,
-                                                         "operations_per_second":  920.631,
+                                                         "p95_operation_latency_ms":  4.764,
+                                                         "operations_per_second":  474.574,
                                                          "measured_operations":  225,
                                                          "warmup_operations":  45,
                                                          "failed_operations":  0,
@@ -249,8 +249,8 @@
                                                      {
                                                          "repeat":  3,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.754,
-                                                         "operations_per_second":  731.221,
+                                                         "p95_operation_latency_ms":  3.659,
+                                                         "operations_per_second":  539.598,
                                                          "measured_operations":  225,
                                                          "warmup_operations":  45,
                                                          "failed_operations":  0,
@@ -289,8 +289,8 @@
                                                      {
                                                          "repeat":  1,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.918,
-                                                         "operations_per_second":  724.089,
+                                                         "p95_operation_latency_ms":  5.294,
+                                                         "operations_per_second":  422.462,
                                                          "measured_operations":  225,
                                                          "warmup_operations":  45,
                                                          "failed_operations":  0,
@@ -300,8 +300,8 @@
                                                      {
                                                          "repeat":  2,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.531,
-                                                         "operations_per_second":  920.631,
+                                                         "p95_operation_latency_ms":  4.764,
+                                                         "operations_per_second":  474.574,
                                                          "measured_operations":  225,
                                                          "warmup_operations":  45,
                                                          "failed_operations":  0,
@@ -311,8 +311,8 @@
                                                      {
                                                          "repeat":  3,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.754,
-                                                         "operations_per_second":  731.221,
+                                                         "p95_operation_latency_ms":  3.659,
+                                                         "operations_per_second":  539.598,
                                                          "measured_operations":  225,
                                                          "warmup_operations":  45,
                                                          "failed_operations":  0,
@@ -351,8 +351,8 @@
                                                      {
                                                          "repeat":  1,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.918,
-                                                         "operations_per_second":  724.089,
+                                                         "p95_operation_latency_ms":  5.294,
+                                                         "operations_per_second":  422.462,
                                                          "measured_operations":  225,
                                                          "warmup_operations":  45,
                                                          "failed_operations":  0,
@@ -362,8 +362,8 @@
                                                      {
                                                          "repeat":  2,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.531,
-                                                         "operations_per_second":  920.631,
+                                                         "p95_operation_latency_ms":  4.764,
+                                                         "operations_per_second":  474.574,
                                                          "measured_operations":  225,
                                                          "warmup_operations":  45,
                                                          "failed_operations":  0,
@@ -373,8 +373,8 @@
                                                      {
                                                          "repeat":  3,
                                                          "conformance_rate_percent":  100,
-                                                         "p95_operation_latency_ms":  1.754,
-                                                         "operations_per_second":  731.221,
+                                                         "p95_operation_latency_ms":  3.659,
+                                                         "operations_per_second":  539.598,
                                                          "measured_operations":  225,
                                                          "warmup_operations":  45,
                                                          "failed_operations":  0,
@@ -387,8 +387,8 @@
                 ],
     "execution":  {
                       "command":  "pwsh -NoProfile -File tools/benchmark-v2.ps1 -Image mini-aws-emulator:benchmark -WarmupIterations 5 -Iterations 25 -Repeat 3",
-                      "started_at":  "2026-08-10T06:13:36.9885471Z",
-                      "duration_seconds":  177.783,
+                      "started_at":  "2026-08-14T03:51:23.2262531Z",
+                      "duration_seconds":  99.98,
                       "exit_code":  0,
                       "repeat":  3
                   },
@@ -402,13 +402,13 @@
                         "aws_parity":  "not_measured"
                     },
     "provenance":  {
-                       "source_commit":  "fa2ece581f946bf7be9016b8dcaf832b5f2d2980",
+                       "source_commit":  "4cadbea634226180214c65ac282bc58886486076",
                        "clean_tree":  true,
                        "image_ref":  "mini-aws-emulator:benchmark",
-                       "image_digest":  "sha256:5f394b9e76778b19939b81ad034a410c36b7a62a99a8046838aa9b7039817417",
+                       "image_digest":  "sha256:5bab6bf6aba06267b199b30b8d3184754aef837df7b8109c86ec9251045a012a",
                        "dependency_lock_digest":  "sha256:d3f5675ead85ec1e9278cb5158229b832c007a72a6c1cb513063a4ea8d44a0b1",
                        "producer":  "local",
-                       "artifact_digest":  "sha256:45c662ee4dae4b6be67d3f7acc7931e500f0022c703d2d5b6fe3b2fca0fd0de7"
+                       "artifact_digest":  "sha256:a2d9d0bb5ea1bf4661766b8e723721b394955d907e2f46a5f123e229c815c2a4"
                    },
     "comparability_key":  "aws-sdk-kumo:2.0.0:kumo-0.25.3:sdk-1.41.9:go-1.25.10:s3-sqs-dynamodb:warmup-5:measure-25:c1"
 }

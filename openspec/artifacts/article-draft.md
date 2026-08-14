@@ -4,7 +4,7 @@ One AWS SDK v2 adapter preserves 18 scoped S3, SQS, and DynamoDB behaviors when 
 
 This repository belongs to the Backend Reliability and Architecture Platform program. Its job is narrow: prove the measurable claim through the selected component pack before adding unrelated infrastructure or features.
 
-The benchmark is the proof. conformance_rate_percent = 100 percent.  The result is stored in `benchmarks/results/kumo-baseline.json` and can be reproduced from the Docker/local path.
+The benchmark is the proof. conformance_rate_percent = 100 percent across three Kumo runs, with 4.764 ms median p95 and 478.878 operations per second. The publication result is stored in `benchmarks/publication/kumo-baseline-v2.json` and can be reproduced from the Docker/local path.
 
 The important architecture decision is hexagonal. Cloud services are material external boundaries, so ports isolate the behavioral suite from the AWS SDK while the composition root selects local or real configuration.
 

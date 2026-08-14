@@ -19,7 +19,7 @@ A single Docker run produces numeric JSON showing scoped conformance, operation 
 - Kumo local-first execution.
 - Guarded real AWS configuration.
 - Provider-independent ports and an in-memory fake.
-- Two committed benchmark runs.
+- Two V1 comparison runs and one V2 publication artifact with three repetitions.
 
 ## Out Of Scope
 
@@ -36,6 +36,8 @@ A single Docker run produces numeric JSON showing scoped conformance, operation 
 - [x] All 225 measured operations succeed.
 - [x] Primary metric is `conformance_rate_percent=100`.
 - [x] Core coverage is at least 75%.
+- [x] V2 evidence contains at least three Kumo repetitions through AWS SDK Go v2.
+- [x] Fixture, configuration, dependency lock, provider image, and source commit provenance validate.
 - [x] Kumo release and digest are present in result JSON.
 - [x] Known SDK close warnings are numeric, while unrelated warnings remain visible.
 - [x] Real AWS is refused without explicit opt-in and run ID.

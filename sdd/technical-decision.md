@@ -42,6 +42,8 @@ Smithy emits one known close warning per Kumo S3 response. A custom logger count
 
 The Kumo release uses tag `v0.25.3`, while its GoReleaser configuration publishes image tag `0.25.3`. The committed image reference includes both `0.25.3` and the reviewed manifest digest. Project validation rejects the mutable Kumo image reference.
 
+V2 provenance hashes canonical blobs from the clean source commit instead of checkout files. This keeps fixture, configuration, and dependency-lock digests stable across Windows CRLF and Linux LF worktrees.
+
 ## Rejected Libraries And Services
 
 - LocalStack: not required because Kumo is the portfolio standard and supports the selected services.

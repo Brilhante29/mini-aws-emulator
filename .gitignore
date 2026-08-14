@@ -6,4 +6,3 @@ coverage.out
 benchmarks/results/*.json
 !benchmarks/results/kumo-baseline.json
 !benchmarks/results/kumo-confirmation.json
-!benchmarks/results/kumo-baseline-v2.json
