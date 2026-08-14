@@ -41,7 +41,9 @@ try {
 
   function Get-CombinedDigest {
     param([string[]]$RelativePaths)
-    $lines = foreach ($relative in ($RelativePaths | Sort-Object)) {
+    $orderedPaths = [string[]]@($RelativePaths)
+    [Array]::Sort($orderedPaths, [StringComparer]::Ordinal)
+    $lines = foreach ($relative in $orderedPaths) {
       $hash = Get-GitBlobSHA256 $relative
       "${relative}|${hash}"
     }
