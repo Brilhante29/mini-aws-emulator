@@ -1,4 +1,4 @@
-# #13 mini-aws-emulator: 100% scoped conformance at 4.764 ms p95
+# AWS Emulator Conformance Benchmark
 
 **Claim:** one AWS SDK v2 adapter preserves 18 scoped S3, SQS, and DynamoDB behaviors when switched between pinned Kumo and real AWS configuration.
 
