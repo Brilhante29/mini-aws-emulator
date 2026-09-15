@@ -2,7 +2,7 @@
 
 **Claim:** one AWS SDK v2 adapter preserves 18 scoped S3, SQS, and DynamoDB behaviors when switched between pinned Kumo and real AWS configuration.
 
-**Benchmark:** `18/18` checks, `225` measured operations per run, `4.764 ms` aggregate median p95 across three runs, `478.878 ops/s` mean, and zero functional failures.
+**Benchmark:** `100%` conformance (`18/18` checks), `225` measured operations per run, `4.764 ms` aggregate median p95 across three runs, `478.878 ops/s` mean, and zero functional failures.
 
 [![CI](https://github.com/Brilhante29/mini-aws-emulator/actions/workflows/ci.yml/badge.svg)](https://github.com/Brilhante29/mini-aws-emulator/actions/workflows/ci.yml)
 
