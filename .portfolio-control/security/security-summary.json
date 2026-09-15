@@ -1,0 +1,15 @@
+{
+  "disposition": "documented",
+  "fixable": 29,
+  "fixable_packages": {
+    "golang.org/x/crypto": 9,
+    "stdlib": 20
+  },
+  "generated_at": "2026-08-21T14:32:38.535821Z",
+  "high_critical_total": 29,
+  "image": "mini-aws-emulator:sec",
+  "no_upstream_fix": 0,
+  "rationale": "Base images are pinned by digest so benchmark provenance stays comparable. Rebuilding does not clear these advisories: the current upstream digest carries the same set. Applying apt-get upgrade would make the image non-deterministic and change image_digest between builds of the same commit, breaking the V2 comparability contract.",
+  "repository": "mini-aws-emulator",
+  "sbom_packages": 82
+}
