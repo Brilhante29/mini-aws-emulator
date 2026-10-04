@@ -5,6 +5,17 @@
 **Benchmark:** `100%` conformance (`18/18` checks), `225` measured operations per run, `4.764 ms` aggregate median p95 across three runs, `478.878 ops/s` mean, and zero functional failures.
 
 [![CI](https://github.com/Brilhante29/mini-aws-emulator/actions/workflows/ci.yml/badge.svg)](https://github.com/Brilhante29/mini-aws-emulator/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+![Go](https://img.shields.io/badge/Go-1.25-00ADD8?logo=go&logoColor=white) ![AWS SDK Go v2](https://img.shields.io/badge/AWS%20SDK-Go%20v2-FF9900?logo=amazonwebservices&logoColor=white)
+
+## Why this exists
+
+Local cloud emulators make tests fast and free, but they quietly answer a different question: "does my code work against the emulator?" Teams then discover in production that a behavior they relied on differs on real AWS. The useful question is narrower and testable: for the operations my service actually uses, does the **same adapter and the same SDK calls** behave identically against the emulator and against AWS? This repository answers it for a scoped S3, SQS, and DynamoDB contract:
+
+- one AWS SDK Go v2 adapter targets Kumo through an endpoint override, or AWS through default endpoints;
+- 18 behavioral checks define the contract, and the suites depend on narrow capability ports, not AWS packages;
+- known emulator gaps are counted and reported (see the compatibility diagnostic), never silently ignored;
+- real AWS execution is refused unless explicitly enabled with a unique run identifier, because it creates billable resources.
 
 ## What It Proves
 
@@ -20,7 +31,7 @@ This project does not reimplement Kumo. It provides the compatibility, safety, a
 
 ## Run With Docker
 
-```powershell
+```bash
 docker build -t mini-aws-emulator .
 docker run --rm mini-aws-emulator
 ```
@@ -213,6 +224,23 @@ On Linux/macOS, use `./tools/benchmark.sh` for a single benchmark run or PowerSh
 - The performance result is local Docker throughput, not AWS regional latency or production capacity.
 - Real AWS parity is pluggable but intentionally absent from CI to avoid credentials, cost, and destructive side effects.
 
-## References
+## How this repository is built
 
-See `REFERENCES.md` for primary sources, versions, licenses, and organization references.
+The project follows the spec-driven workflow of [portfolio-reuse-kit](https://github.com/Brilhante29/portfolio-reuse-kit). Requirements and decisions live in [`sdd/`](sdd) and [`openspec/`](openspec), and [`project.yaml`](project.yaml) records the architecture, stack, and rejected alternatives. Development is AI-assisted and human-governed: [`AGENTS.md`](AGENTS.md) and [`CLAUDE.md`](CLAUDE.md) hold the coding-agent instructions, while tests, validators, and CI decide what gets published.
+
+## Related work
+
+- [terraform-aws-baseline](https://github.com/Brilhante29/terraform-aws-baseline): one Terraform module applied to Kumo locally and to AWS by switching only the provider adapter.
+- [kiri-aws](https://github.com/Brilhante29/kiri-aws): a Kumo-based AWS emulator I maintain, with a cost surface (Cost Explorer, Budgets) and a Time Machine API.
+- [cost-aware-inference](https://github.com/Brilhante29/cost-aware-inference): the same local-first approach applied to model inference.
+
+See [`REFERENCES.md`](REFERENCES.md) for primary sources, versions, licenses, and organization references.
+
+## Author
+
+**Guilherme Brilhante**, software engineer working on scalable backends and production AI.
+[LinkedIn](https://www.linkedin.com/in/guilhermefreirebrilhanteseveriano/) · [GitHub](https://github.com/Brilhante29) · [Publications](https://dblp.org/pid/353/6812.html)
+
+## License
+
+[MIT](LICENSE).
